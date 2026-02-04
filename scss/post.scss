@@ -757,7 +757,7 @@ body.pagelayout-mycourses {
   }
 }
 
-// ── FOOTER — Full width breakout ─────────────────────────────
+// ── FOOTER — Full width + no gaps ────────────────────────────
 
 // Make footer full-width regardless of container constraints
 #page-footer.lucent-footer,
@@ -768,17 +768,45 @@ footer.lucent-footer {
   margin-right: calc(-50vw + 50%) !important;
   position: relative;
   margin-bottom: 0 !important;
+  border-top: none !important;
+  background: transparent !important;
 }
 
-// Kill any gap after footer
+// Kill ALL gaps after footer
 #page.drawers {
   padding-bottom: 0 !important;
   margin-bottom: 0 !important;
 }
 
-// Hide debug footer gap
-.footer-content-debugging:empty {
-  display: none;
+#page-wrapper {
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+body {
+  padding-bottom: 0 !important;
+}
+
+// Empty debug footer — collapse it
+.footer-content-debugging {
+  display: none !important;
+}
+
+// Footer should be flush to bottom
+.stickyfooter,
+.sticky-footer-content {
+  padding: 0 !important;
+}
+
+// Kill bottom padding from Moodle page regions
+#page-content {
+  padding-bottom: 0 !important;
+}
+
+// After-region HTML — no extra space
+.drawercontrols,
+[data-region="after-main-region"] {
+  &:empty { display: none; }
 }
 
 // ── COURSE LISTING / CATEGORY PAGE — Udemy-style ────────────
@@ -1051,7 +1079,14 @@ body.pagelayout-coursecategory {
 
 .lucent-footer .lucent-footer-main {
   background: #0f172a;
-  padding: 0 24px;
+  padding: 0;
+
+  .container-fluid,
+  .lucent-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
 }
 
 .lucent-footer .lucent-footer-heading-sm {
