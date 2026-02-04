@@ -1767,8 +1767,23 @@ input[type="radio"] {
 }
 
 // Participants list
-.user-list-item,
-.userlist .cell {
+// User list items (non-table contexts only)
+.user-list-item {
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--lucent-border-light);
+  transition: var(--lucent-transition);
+
+  &:hover {
+    background: var(--lucent-surface-hover);
+  }
+}
+
+// Userlist cells in NON-table contexts (e.g. card/list views)
+// Do NOT target .cell inside tables — it breaks table-cell display
+.userlist:not(table):not(.generaltable) > .cell {
   min-height: 64px;
   display: flex;
   align-items: center;

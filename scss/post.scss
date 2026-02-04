@@ -954,6 +954,24 @@ body.pagelayout-mydashboard {
     border-radius: var(--lucent-radius-lg) !important;
     border: 1px solid var(--lucent-border) !important;
     box-shadow: var(--lucent-shadow-sm) !important;
+
+    // Fix overlapping dropdown text in timeline controls
+    [data-region="timeline-view-controls"],
+    [data-region="view-selector"] {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+
+      .dropdown,
+      .custom-select,
+      select {
+        min-width: 140px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
   }
 
   // Block headers — cleaner

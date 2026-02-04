@@ -123,17 +123,17 @@
                 {{! ── Course grid ── }}
                 <div class="lucent-courses-grid" id="lucent-course-grid">
                     {{#lucentcourses}}
-                    <a href="{{{ url }}}" class="lucent-course-card" data-coursename="{{fullname}}" data-catname="{{catname}}">
+                    <a href="{{{ url }}}" class="lucent-course-card" data-coursename="{{{fullname}}}" data-catname="{{{catname}}}">
                         <div class="lucent-course-image" {{#image}}style="background-image: url('{{{ image }}}')"{{/image}}>
                             {{^image}}
                             <div class="lucent-course-placeholder">📚</div>
                             {{/image}}
                             {{#catname}}
-                            <span class="lucent-course-badge">{{catname}}</span>
+                            <span class="lucent-course-badge">{{{catname}}}</span>
                             {{/catname}}
                         </div>
                         <div class="lucent-course-body">
-                            <h3 class="lucent-course-title">{{fullname}}</h3>
+                            <h3 class="lucent-course-title">{{{fullname}}}</h3>
                             {{#summary}}
                             <p class="lucent-course-desc">{{summary}}</p>
                             {{/summary}}
