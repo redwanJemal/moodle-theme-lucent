@@ -64,6 +64,108 @@ function theme_lucent_get_main_scss_content($theme) {
 function theme_lucent_get_extra_scss($theme) {
     $content = '';
 
+    // Boxed layout.
+    $layoutstyle = !empty($theme->settings->layoutstyle) ? $theme->settings->layoutstyle : 'wide';
+    if ($layoutstyle === 'boxed') {
+        $content .= '
+            body { background: #e2e8f0; }
+            #page.drawers, #page-wrapper {
+                max-width: 1400px;
+                margin: 0 auto;
+                background: var(--lucent-surface);
+                box-shadow: 0 0 40px rgba(0,0,0,0.08);
+            }
+            body.lucent-dark { background: #0a0f1e; }
+            body.lucent-dark #page.drawers,
+            body.lucent-dark #page-wrapper {
+                box-shadow: 0 0 40px rgba(0,0,0,0.3);
+            }
+        ';
+    }
+
+    // Top bar CSS from settings.
+    $topbarbg = !empty($theme->settings->topbarbg) ? $theme->settings->topbarbg : '#0f172a';
+    $topbarcolor = !empty($theme->settings->topbarcolor) ? $theme->settings->topbarcolor : '#ffffff';
+    $content .= "
+        :root {
+            --lucent-topbar-bg: {$topbarbg};
+            --lucent-topbar-color: {$topbarcolor};
+        }
+    ";
+
+    // Course list style.
+    $courseliststyle = !empty($theme->settings->courseliststyle) ? $theme->settings->courseliststyle : 'grid';
+    if ($courseliststyle === 'list') {
+        $content .= '
+            .lucent-courses-grid {
+                grid-template-columns: 1fr !important;
+                gap: 1rem;
+            }
+            .lucent-course-card {
+                flex-direction: row !important;
+                max-height: 180px;
+            }
+            .lucent-course-card .lucent-course-image {
+                width: 260px;
+                min-width: 260px;
+                height: auto;
+                min-height: 180px;
+            }
+            .lucent-course-card .lucent-course-body {
+                flex: 1;
+            }
+            .lucent-course-card .lucent-course-footer {
+                border-top: none;
+                border-left: 1px solid #f1f5f9;
+                flex-direction: column;
+                justify-content: center;
+                padding: 14px;
+                min-width: 60px;
+            }
+            @media (max-width: 768px) {
+                .lucent-course-card {
+                    flex-direction: column !important;
+                    max-height: none;
+                }
+                .lucent-course-card .lucent-course-image {
+                    width: 100%;
+                    min-width: unset;
+                    height: 160px;
+                    min-height: 160px;
+                }
+                .lucent-course-card .lucent-course-footer {
+                    border-left: none;
+                    border-top: 1px solid #f1f5f9;
+                    flex-direction: row;
+                }
+            }
+        ';
+    } elseif ($courseliststyle === 'compact') {
+        $content .= '
+            .lucent-courses-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;
+                gap: 16px;
+            }
+            .lucent-course-card .lucent-course-image {
+                height: 120px;
+            }
+            .lucent-course-card .lucent-course-body {
+                padding: 12px 14px;
+            }
+            .lucent-course-card .lucent-course-title {
+                font-size: 0.9375rem;
+                -webkit-line-clamp: 1;
+            }
+            .lucent-course-card .lucent-course-desc {
+                font-size: 0.75rem;
+                -webkit-line-clamp: 1;
+            }
+            .lucent-course-card .lucent-course-footer {
+                padding: 10px 14px;
+            }
+        ';
+    }
+
     // Header style overrides.
     $headerstyle = !empty($theme->settings->headerstyle) ? $theme->settings->headerstyle : 'glass';
     switch ($headerstyle) {

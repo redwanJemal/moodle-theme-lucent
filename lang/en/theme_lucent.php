@@ -158,6 +158,39 @@ $string['error_gohome'] = 'Back to Home';
 $string['maintenance_title'] = 'We\'ll be back soon';
 $string['maintenance_message'] = 'We\'re making some improvements to bring you a better experience. Please check back in a few minutes.';
 
+// ── Layout ──
+$string['layoutstyle'] = 'Layout Style';
+$string['layoutstyle_desc'] = 'Choose between a full-width layout or a centered boxed layout with background color.';
+$string['layout_wide'] = '📐 Wide (Full Width)';
+$string['layout_boxed'] = '📦 Boxed (Centered)';
+
+// ── Top Bar ──
+$string['enabletopbar'] = 'Enable Top Bar';
+$string['enabletopbar_desc'] = 'Show an announcement/info bar above the navigation. Great for contact info, alerts, or promotions.';
+$string['topbarcontent'] = 'Top Bar Content';
+$string['topbarcontent_desc'] = 'Text content for the top bar. Supports HTML and emoji. Example: "📞 +251 XXX | ✉️ info@school.com"';
+$string['topbarbg'] = 'Top Bar Background';
+$string['topbarbg_desc'] = 'Background color for the top bar.';
+$string['topbarcolor'] = 'Top Bar Text Color';
+$string['topbarcolor_desc'] = 'Text color for the top bar content.';
+
+// ── Hero Styles ──
+$string['herostyle'] = 'Hero Style';
+$string['herostyle_desc'] = 'Visual style for the frontpage hero section.';
+$string['herostyle_gradient'] = '🎨 Gradient (Default)';
+$string['herostyle_image'] = '🖼️ Background Image';
+$string['herostyle_video'] = '🎬 Video Background';
+$string['herostyle_minimal'] = '✨ Minimal (Light)';
+$string['herovideo'] = 'Hero Video URL';
+$string['herovideo_desc'] = 'YouTube or Vimeo URL for the video background hero. Example: https://www.youtube.com/watch?v=dQw4w9WgXcQ';
+
+// ── Course List Style ──
+$string['courseliststyle'] = 'Course List Style';
+$string['courseliststyle_desc'] = 'How courses are displayed in the frontpage grid and category pages.';
+$string['courseliststyle_grid'] = '🔲 Card Grid (Default)';
+$string['courseliststyle_list'] = '📋 List View';
+$string['courseliststyle_compact'] = '🔳 Compact Grid';
+
 // ── Advanced ──
 $string['customscss'] = 'Custom SCSS';
 $string['customscss_desc'] = 'Custom SCSS code — compiled with the theme. Use $primary, $secondary, etc. variables.';

@@ -101,8 +101,14 @@ try {
     // If categories fail to load, just skip.
 }
 
+// Top bar settings.
+$topbarenabled = get_config('theme_lucent', 'enabletopbar');
+$topbarcontent = get_config('theme_lucent', 'topbarcontent');
+
 $templatecontext = [
     'sitename' => format_string($SITE->shortname, true, ['context' => context_course::instance(SITEID), "escape" => false]),
+    'topbarenabled' => !empty($topbarenabled),
+    'topbarcontent' => $topbarcontent,
     'output' => $OUTPUT,
     'sidepreblocks' => $blockshtml,
     'hasblocks' => $hasblocks,

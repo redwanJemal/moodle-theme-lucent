@@ -115,6 +115,18 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
+    // ── Layout Style (Boxed/Wide) ──
+    $name = 'theme_lucent/layoutstyle';
+    $title = get_string('layoutstyle', 'theme_lucent');
+    $description = get_string('layoutstyle_desc', 'theme_lucent');
+    $choices = [
+        'wide' => get_string('layout_wide', 'theme_lucent'),
+        'boxed' => get_string('layout_boxed', 'theme_lucent'),
+    ];
+    $setting = new admin_setting_configselect($name, $title, $description, 'wide', $choices);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
     $settings->add($page);
 
 
@@ -164,6 +176,27 @@ if ($ADMIN->fulltree) {
     // ═══════════════════════════════════════════════════════
 
     $page = new admin_settingpage('theme_lucent_hero', get_string('herosettings', 'theme_lucent'));
+
+    // ── Hero Style ──
+    $name = 'theme_lucent/herostyle';
+    $title = get_string('herostyle', 'theme_lucent');
+    $description = get_string('herostyle_desc', 'theme_lucent');
+    $choices = [
+        'gradient' => get_string('herostyle_gradient', 'theme_lucent'),
+        'image' => get_string('herostyle_image', 'theme_lucent'),
+        'video' => get_string('herostyle_video', 'theme_lucent'),
+        'minimal' => get_string('herostyle_minimal', 'theme_lucent'),
+    ];
+    $setting = new admin_setting_configselect($name, $title, $description, 'gradient', $choices);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // ── Hero Video URL ──
+    $name = 'theme_lucent/herovideo';
+    $title = get_string('herovideo', 'theme_lucent');
+    $description = get_string('herovideo_desc', 'theme_lucent');
+    $setting = new admin_setting_configtext($name, $title, $description, '');
+    $page->add($setting);
 
     // ── Hero Badge Text ──
     $name = 'theme_lucent/herobadge';
@@ -238,6 +271,19 @@ if ($ADMIN->fulltree) {
     $setting = new admin_setting_configselect($name, $title, $description, '3', $choices);
     $page->add($setting);
 
+    // ── Course List Style ──
+    $name = 'theme_lucent/courseliststyle';
+    $title = get_string('courseliststyle', 'theme_lucent');
+    $description = get_string('courseliststyle_desc', 'theme_lucent');
+    $choices = [
+        'grid' => get_string('courseliststyle_grid', 'theme_lucent'),
+        'list' => get_string('courseliststyle_list', 'theme_lucent'),
+        'compact' => get_string('courseliststyle_compact', 'theme_lucent'),
+    ];
+    $setting = new admin_setting_configselect($name, $title, $description, 'grid', $choices);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
     $settings->add($page);
 
 
@@ -292,6 +338,34 @@ if ($ADMIN->fulltree) {
     // ═══════════════════════════════════════════════════════
 
     $page = new admin_settingpage('theme_lucent_header', get_string('headersettings', 'theme_lucent'));
+
+    // ── Top Bar (Announcement/Info Bar) ──
+    $name = 'theme_lucent/enabletopbar';
+    $title = get_string('enabletopbar', 'theme_lucent');
+    $description = get_string('enabletopbar_desc', 'theme_lucent');
+    $setting = new admin_setting_configcheckbox($name, $title, $description, 0);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $name = 'theme_lucent/topbarcontent';
+    $title = get_string('topbarcontent', 'theme_lucent');
+    $description = get_string('topbarcontent_desc', 'theme_lucent');
+    $setting = new admin_setting_configtext($name, $title, $description, '');
+    $page->add($setting);
+
+    $name = 'theme_lucent/topbarbg';
+    $title = get_string('topbarbg', 'theme_lucent');
+    $description = get_string('topbarbg_desc', 'theme_lucent');
+    $setting = new admin_setting_configcolourpicker($name, $title, $description, '#0f172a');
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $name = 'theme_lucent/topbarcolor';
+    $title = get_string('topbarcolor', 'theme_lucent');
+    $description = get_string('topbarcolor_desc', 'theme_lucent');
+    $setting = new admin_setting_configcolourpicker($name, $title, $description, '#ffffff');
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
 
     // ── Header Style ──
     $name = 'theme_lucent/headerstyle';

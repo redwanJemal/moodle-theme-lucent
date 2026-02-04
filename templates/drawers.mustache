@@ -57,6 +57,18 @@
 
     {{{ output.standard_top_of_body_html }}}
 
+    {{! ── Top Bar (Announcement/Info Bar) ── }}
+    {{#topbarenabled}}
+    {{#topbarcontent}}
+    <div class="lucent-topbar">
+        <div class="lucent-topbar-inner">
+            <span class="lucent-topbar-content">{{{topbarcontent}}}</span>
+            <button class="lucent-topbar-close" aria-label="Close" onclick="this.parentElement.parentElement.style.display='none'">&times;</button>
+        </div>
+    </div>
+    {{/topbarcontent}}
+    {{/topbarenabled}}
+
     {{! ── Lucent Navbar ── }}
     {{> theme_lucent/navbar }}
 

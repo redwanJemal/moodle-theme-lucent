@@ -81,6 +81,20 @@ echo $OUTPUT->doctype();
 
 <?php echo $OUTPUT->standard_top_of_body_html(); ?>
 
+<!-- Top Bar (Announcement/Info Bar) -->
+<?php
+$topbarenabled = get_config('theme_lucent', 'enabletopbar');
+$topbarcontent = get_config('theme_lucent', 'topbarcontent');
+if (!empty($topbarenabled) && !empty($topbarcontent)):
+?>
+<div class="lucent-topbar">
+    <div class="lucent-topbar-inner">
+        <span class="lucent-topbar-content"><?php echo $topbarcontent; ?></span>
+        <button class="lucent-topbar-close" aria-label="Close" onclick="this.parentElement.parentElement.style.display='none'">&times;</button>
+    </div>
+</div>
+<?php endif; ?>
+
 <!-- Navbar -->
 <nav class="lucent-fp-navbar">
     <div class="lucent-container lucent-fp-navbar-inner">
@@ -129,8 +143,52 @@ echo $OUTPUT->doctype();
 <!-- ══════════════════════════════════════════════════ -->
 <!-- HERO SECTION -->
 <!-- ══════════════════════════════════════════════════ -->
-<section class="lucent-hero">
+<?php
+$herostyle = get_config('theme_lucent', 'herostyle') ?: 'gradient';
+$herovideo = get_config('theme_lucent', 'herovideo') ?: '';
+
+// Extract YouTube/Vimeo embed ID
+$videoembedurl = '';
+if ($herostyle === 'video' && !empty($herovideo)) {
+    if (preg_match('/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/', $herovideo, $m)) {
+        $videoembedurl = 'https://www.youtube.com/embed/' . $m[1] . '?autoplay=1&mute=1&loop=1&playlist=' . $m[1] . '&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1';
+    } elseif (preg_match('/vimeo\.com\/(?:video\/)?(\d+)/', $herovideo, $m)) {
+        $videoembedurl = 'https://player.vimeo.com/video/' . $m[1] . '?autoplay=1&muted=1&loop=1&background=1';
+    }
+}
+
+// Get hero image URL
+$heroimageurl = '';
+$heroimagefile = $OUTPUT->image_url('heroimage', 'theme_lucent');
+// Check if heroimage file is uploaded
+$fs = get_file_storage();
+$ctx = context_system::instance();
+$herofiles = $fs->get_area_files($ctx->id, 'theme_lucent', 'heroimage', 0, 'filename', false);
+foreach ($herofiles as $hf) {
+    $heroimageurl = moodle_url::make_pluginfile_url(
+        $hf->get_contextid(), $hf->get_component(), $hf->get_filearea(),
+        null, $hf->get_filepath(), $hf->get_filename()
+    )->out();
+    break;
+}
+
+$heroclass = 'lucent-hero lucent-hero-' . $herostyle;
+?>
+<section class="<?php echo $heroclass; ?>">
+    <?php if ($herostyle === 'video' && $videoembedurl): ?>
+    <div class="lucent-hero-video-bg">
+        <iframe src="<?php echo $videoembedurl; ?>" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+        <div class="lucent-hero-video-overlay"></div>
+    </div>
+    <?php elseif ($herostyle === 'image' && $heroimageurl): ?>
+    <div class="lucent-hero-bg lucent-hero-bg-image" style="background-image: url('<?php echo $heroimageurl; ?>')">
+        <div class="lucent-hero-image-overlay"></div>
+    </div>
+    <?php elseif ($herostyle === 'minimal'): ?>
+    <div class="lucent-hero-bg lucent-hero-bg-minimal"></div>
+    <?php else: ?>
     <div class="lucent-hero-bg"></div>
+    <?php endif; ?>
     <div class="lucent-hero-content">
         <?php
         $herobadge = get_config('theme_lucent', 'herobadge') ?: '🎓 Online Learning Platform';
