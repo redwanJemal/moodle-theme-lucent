@@ -1,0 +1,663 @@
+// ══════════════════════════════════════════════════════════════
+// LUCENT THEME — Main Styles
+// Premium, modern overrides for Moodle/Boost
+// ══════════════════════════════════════════════════════════════
+
+// -- Google Fonts --
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+// ── CSS Custom Properties ────────────────────────────────────
+:root {
+  --lucent-primary: #{$primary};
+  --lucent-primary-light: #{lighten($primary, 25%)};
+  --lucent-primary-dark: #{darken($primary, 10%)};
+  --lucent-surface: #ffffff;
+  --lucent-surface-hover: #f8fafc;
+  --lucent-surface-elevated: #ffffff;
+  --lucent-border: #e2e8f0;
+  --lucent-text: #1e293b;
+  --lucent-text-muted: #64748b;
+  --lucent-text-light: #94a3b8;
+  --lucent-shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --lucent-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+  --lucent-shadow-md: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -2px rgba(0,0,0,0.06);
+  --lucent-shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.06);
+  --lucent-radius: 0.625rem;
+  --lucent-radius-lg: 0.875rem;
+  --lucent-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// ── Dark Mode Variables ──────────────────────────────────────
+[data-theme="dark"],
+body.lucent-dark {
+  --lucent-surface: #0f172a;
+  --lucent-surface-hover: #1e293b;
+  --lucent-surface-elevated: #1e293b;
+  --lucent-border: #334155;
+  --lucent-text: #f1f5f9;
+  --lucent-text-muted: #94a3b8;
+  --lucent-text-light: #64748b;
+  --lucent-shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+  --lucent-shadow: 0 1px 3px rgba(0,0,0,0.4);
+  --lucent-shadow-md: 0 4px 6px rgba(0,0,0,0.4);
+  --lucent-shadow-lg: 0 10px 15px rgba(0,0,0,0.5);
+
+  background-color: #0f172a !important;
+  color: var(--lucent-text);
+
+  .card, #page, #page-wrapper {
+    background-color: var(--lucent-surface) !important;
+    color: var(--lucent-text);
+  }
+
+  .navbar {
+    background-color: #0f172a !important;
+    border-bottom-color: var(--lucent-border) !important;
+  }
+
+  #page-content, .course-content {
+    background-color: var(--lucent-surface);
+  }
+
+  .drawer {
+    background-color: var(--lucent-surface-elevated) !important;
+    border-color: var(--lucent-border) !important;
+  }
+
+  .btn-outline-secondary {
+    color: var(--lucent-text-muted);
+    border-color: var(--lucent-border);
+  }
+
+  a:not(.btn) {
+    color: var(--lucent-primary-light);
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+// GLOBAL RESETS & BASE
+// ══════════════════════════════════════════════════════════════
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--lucent-surface);
+  color: var(--lucent-text);
+}
+
+// Smooth scrolling
+html {
+  scroll-behavior: smooth;
+}
+
+// Better focus outlines
+*:focus-visible {
+  outline: 2px solid var(--lucent-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+// ══════════════════════════════════════════════════════════════
+// NAVBAR — Clean, floating header
+// ══════════════════════════════════════════════════════════════
+
+.navbar {
+  background-color: var(--lucent-surface) !important;
+  border-bottom: 1px solid var(--lucent-border);
+  box-shadow: none;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 0.5rem 1.5rem;
+  min-height: 64px;
+  transition: var(--lucent-transition);
+
+  .navbar-brand {
+    font-weight: 700;
+    font-size: 1.125rem;
+    letter-spacing: -0.025em;
+  }
+
+  .nav-link {
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: var(--lucent-text-muted) !important;
+    padding: 0.5rem 0.75rem !important;
+    border-radius: var(--lucent-radius);
+    transition: var(--lucent-transition);
+
+    &:hover {
+      color: var(--lucent-text) !important;
+      background-color: var(--lucent-surface-hover);
+    }
+
+    &.active {
+      color: var(--lucent-primary) !important;
+    }
+  }
+
+  // User menu
+  .usermenu {
+    .dropdown-toggle {
+      border-radius: var(--lucent-radius-lg);
+      padding: 0.375rem 0.75rem;
+      transition: var(--lucent-transition);
+
+      &:hover {
+        background-color: var(--lucent-surface-hover);
+      }
+    }
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+// CARDS — Elevated, clean cards
+// ══════════════════════════════════════════════════════════════
+
+.card {
+  background-color: var(--lucent-surface-elevated);
+  border: 1px solid var(--lucent-border);
+  border-radius: var(--lucent-radius-lg);
+  box-shadow: var(--lucent-shadow-sm);
+  transition: var(--lucent-transition);
+  overflow: hidden;
+
+  &:hover {
+    box-shadow: var(--lucent-shadow-md);
+    transform: translateY(-1px);
+  }
+
+  .card-header {
+    background: transparent;
+    border-bottom: 1px solid var(--lucent-border);
+    padding: 1rem 1.25rem;
+    font-weight: 600;
+  }
+
+  .card-body {
+    padding: 1.25rem;
+  }
+
+  .card-footer {
+    background: transparent;
+    border-top: 1px solid var(--lucent-border);
+    padding: 0.75rem 1.25rem;
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+// COURSE CARDS — Premium course tiles
+// ══════════════════════════════════════════════════════════════
+
+.dashboard-card {
+  border-radius: var(--lucent-radius-lg) !important;
+  overflow: hidden;
+  transition: var(--lucent-transition);
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--lucent-shadow-lg);
+  }
+
+  .dashboard-card-img {
+    height: 160px;
+    object-fit: cover;
+    border-radius: 0;
+  }
+
+  .dashboard-card-deck .dashboard-card-footer {
+    border-top: 1px solid var(--lucent-border);
+  }
+}
+
+.coursebox {
+  border-radius: var(--lucent-radius-lg);
+  border: 1px solid var(--lucent-border);
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  transition: var(--lucent-transition);
+
+  &:hover {
+    box-shadow: var(--lucent-shadow-md);
+    border-color: var(--lucent-primary);
+  }
+
+  .coursename a {
+    font-weight: 600;
+    color: var(--lucent-text);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--lucent-primary);
+    }
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+// BUTTONS — Modern, clean buttons
+// ══════════════════════════════════════════════════════════════
+
+.btn {
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 0.5rem 1.25rem;
+  border-radius: var(--lucent-radius);
+  transition: var(--lucent-transition);
+  letter-spacing: -0.01em;
+  border: none;
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.btn-primary {
+  background: var(--lucent-primary);
+  box-shadow: 0 1px 2px rgba(99, 102, 241, 0.3);
+
+  &:hover {
+    background: var(--lucent-primary-dark);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
+    transform: translateY(-1px);
+  }
+}
+
+.btn-secondary {
+  background: var(--lucent-surface-elevated);
+  color: var(--lucent-text);
+  border: 1px solid var(--lucent-border);
+  box-shadow: var(--lucent-shadow-sm);
+
+  &:hover {
+    background: var(--lucent-surface-hover);
+    border-color: var(--lucent-text-light);
+  }
+}
+
+.btn-outline-primary {
+  color: var(--lucent-primary);
+  border: 1.5px solid var(--lucent-primary);
+  background: transparent;
+
+  &:hover {
+    background: var(--lucent-primary);
+    color: white;
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+// SIDEBAR / DRAWERS — Clean navigation
+// ══════════════════════════════════════════════════════════════
+
+.drawer {
+  background-color: var(--lucent-surface-elevated) !important;
+  border-right: 1px solid var(--lucent-border) !important;
+  box-shadow: none !important;
+
+  .list-group-item {
+    border: none;
+    border-radius: var(--lucent-radius);
+    margin: 2px 8px;
+    padding: 0.625rem 1rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: var(--lucent-text-muted);
+    transition: var(--lucent-transition);
+
+    &:hover {
+      background-color: var(--lucent-surface-hover);
+      color: var(--lucent-text);
+    }
+
+    &.active, &[aria-current="true"] {
+      background-color: rgba(99, 102, 241, 0.08);
+      color: var(--lucent-primary);
+      font-weight: 600;
+    }
+
+    .icon {
+      margin-right: 0.5rem;
+      width: 20px;
+    }
+  }
+}
+
+// Course index sidebar
+.courseindex {
+  .courseindex-item {
+    border-radius: var(--lucent-radius);
+    padding: 0.375rem 0.75rem;
+    transition: var(--lucent-transition);
+
+    &:hover {
+      background-color: var(--lucent-surface-hover);
+    }
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+// FORMS — Clean inputs
+// ══════════════════════════════════════════════════════════════
+
+.form-control,
+.custom-select {
+  border: 1.5px solid var(--lucent-border);
+  border-radius: var(--lucent-radius);
+  padding: 0.625rem 0.875rem;
+  font-size: 0.9375rem;
+  transition: var(--lucent-transition);
+  background-color: var(--lucent-surface-elevated);
+
+  &:focus {
+    border-color: var(--lucent-primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+  }
+}
+
+.form-group label,
+.fitem .fitemtitle {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--lucent-text);
+  margin-bottom: 0.375rem;
+}
+
+// ══════════════════════════════════════════════════════════════
+// DROPDOWN MENUS — Floating panels
+// ══════════════════════════════════════════════════════════════
+
+.dropdown-menu {
+  border: 1px solid var(--lucent-border);
+  border-radius: var(--lucent-radius-lg);
+  box-shadow: var(--lucent-shadow-lg);
+  padding: 0.5rem;
+  background-color: var(--lucent-surface-elevated);
+  animation: lucent-dropdown-enter 0.15s ease-out;
+
+  .dropdown-item {
+    border-radius: var(--lucent-radius);
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--lucent-text);
+    transition: var(--lucent-transition);
+
+    &:hover {
+      background-color: var(--lucent-surface-hover);
+      color: var(--lucent-primary);
+    }
+  }
+
+  .dropdown-divider {
+    border-top-color: var(--lucent-border);
+    margin: 0.375rem 0;
+  }
+}
+
+@keyframes lucent-dropdown-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+// PROGRESS BARS — Modern progress
+// ══════════════════════════════════════════════════════════════
+
+.progress {
+  height: 8px;
+  border-radius: 99px;
+  background-color: var(--lucent-surface-hover);
+  overflow: hidden;
+
+  .progress-bar {
+    border-radius: 99px;
+    background: linear-gradient(90deg, var(--lucent-primary), #{lighten($primary, 10%)});
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+// BADGES — Clean tags
+// ══════════════════════════════════════════════════════════════
+
+.badge {
+  font-weight: 600;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: 99px;
+  letter-spacing: 0.01em;
+}
+
+// ══════════════════════════════════════════════════════════════
+// ALERTS & NOTIFICATIONS
+// ══════════════════════════════════════════════════════════════
+
+.alert {
+  border: none;
+  border-radius: var(--lucent-radius-lg);
+  border-left: 4px solid;
+  padding: 1rem 1.25rem;
+  font-size: 0.875rem;
+
+  &.alert-info {
+    background-color: rgba(6, 182, 212, 0.08);
+    border-left-color: $info;
+    color: darken($info, 20%);
+  }
+
+  &.alert-success {
+    background-color: rgba(16, 185, 129, 0.08);
+    border-left-color: $success;
+    color: darken($success, 20%);
+  }
+
+  &.alert-warning {
+    background-color: rgba(245, 158, 11, 0.08);
+    border-left-color: $warning;
+    color: darken($warning, 20%);
+  }
+
+  &.alert-danger {
+    background-color: rgba(239, 68, 68, 0.08);
+    border-left-color: $danger;
+    color: darken($danger, 20%);
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+// TABLES — Clean data tables
+// ══════════════════════════════════════════════════════════════
+
+.table {
+  border-collapse: separate;
+  border-spacing: 0;
+
+  thead th {
+    font-weight: 600;
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--lucent-text-muted);
+    border-bottom: 2px solid var(--lucent-border);
+    padding: 0.75rem 1rem;
+  }
+
+  tbody td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--lucent-border);
+    vertical-align: middle;
+    font-size: 0.875rem;
+  }
+
+  tbody tr {
+    transition: var(--lucent-transition);
+
+    &:hover {
+      background-color: var(--lucent-surface-hover);
+    }
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+// ACTIVITY / MODULES — Clean activity layout
+// ══════════════════════════════════════════════════════════════
+
+.activity-item {
+  border-radius: var(--lucent-radius);
+  padding: 0.75rem 1rem;
+  transition: var(--lucent-transition);
+
+  &:hover {
+    background-color: var(--lucent-surface-hover);
+  }
+
+  .activityname a {
+    font-weight: 600;
+    color: var(--lucent-text);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--lucent-primary);
+    }
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+// FOOTER — Minimal, elegant
+// ══════════════════════════════════════════════════════════════
+
+#page-footer {
+  background-color: var(--lucent-surface);
+  border-top: 1px solid var(--lucent-border);
+  padding: 2rem;
+  font-size: 0.8125rem;
+  color: var(--lucent-text-muted);
+
+  a {
+    color: var(--lucent-text-muted);
+    transition: var(--lucent-transition);
+
+    &:hover {
+      color: var(--lucent-primary);
+    }
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+// BREADCRUMB — Clean breadcrumb
+// ══════════════════════════════════════════════════════════════
+
+.breadcrumb {
+  background: transparent;
+  padding: 0;
+  margin-bottom: 1.5rem;
+  font-size: 0.8125rem;
+
+  .breadcrumb-item {
+    color: var(--lucent-text-muted);
+
+    a {
+      color: var(--lucent-text-muted);
+      text-decoration: none;
+
+      &:hover {
+        color: var(--lucent-primary);
+      }
+    }
+
+    &.active {
+      color: var(--lucent-text);
+      font-weight: 600;
+    }
+
+    + .breadcrumb-item::before {
+      color: var(--lucent-text-light);
+      content: "›";
+      font-size: 1rem;
+    }
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+// MODAL — Clean modals
+// ══════════════════════════════════════════════════════════════
+
+.modal-content {
+  border: none;
+  border-radius: var(--lucent-radius-lg);
+  box-shadow: var(--lucent-shadow-lg);
+  overflow: hidden;
+
+  .modal-header {
+    border-bottom: 1px solid var(--lucent-border);
+    padding: 1.25rem 1.5rem;
+
+    .modal-title {
+      font-weight: 700;
+      font-size: 1.125rem;
+    }
+  }
+
+  .modal-body {
+    padding: 1.5rem;
+  }
+
+  .modal-footer {
+    border-top: 1px solid var(--lucent-border);
+    padding: 1rem 1.5rem;
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+// SCROLLBAR — Custom scrollbar
+// ══════════════════════════════════════════════════════════════
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--lucent-text-light);
+  border-radius: 99px;
+
+  &:hover {
+    background: var(--lucent-text-muted);
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+// UTILITY CLASSES
+// ══════════════════════════════════════════════════════════════
+
+.lucent-glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.lucent-gradient-text {
+  background: linear-gradient(135deg, var(--lucent-primary), #{lighten($primary, 15%)});
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.lucent-hover-lift {
+  transition: var(--lucent-transition);
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--lucent-shadow-md);
+  }
+}
