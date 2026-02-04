@@ -24,11 +24,11 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2025020700;
+$plugin->version   = 2025020800;
 $plugin->requires  = 2024042200; // Moodle 4.4+
 $plugin->component = 'theme_lucent';
 $plugin->maturity  = MATURITY_STABLE;
-$plugin->release   = '1.3.0';
+$plugin->release   = '1.4.0';
 $plugin->dependencies = [
     'theme_boost' => 2024042200,
 ];

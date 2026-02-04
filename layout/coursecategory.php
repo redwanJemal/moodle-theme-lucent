@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Lucent drawer layout — renders theme_lucent/drawers template.
+ * Lucent course category layout — shows all courses as cards with category filters.
  *
  * @package    theme_lucent
  * @copyright  2025 Lucent Theme
@@ -27,7 +27,7 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->libdir . '/behat/lib.php');
 require_once($CFG->dirroot . '/course/lib.php');
 
-// Add block button in editing mode.
+// ── Standard drawers setup (same as drawers.php) ──
 $addblockbutton = $OUTPUT->addblockbutton();
 
 if (isloggedin()) {
@@ -42,7 +42,7 @@ if (defined('BEHAT_SITE_RUNNING') && get_user_preferences('behat_keep_drawer_clo
     $blockdraweropen = true;
 }
 
-$extraclasses = ['uses-drawers'];
+$extraclasses = ['uses-drawers', 'lucent-coursecategory-page'];
 if ($courseindexopen) {
     $extraclasses[] = 'drawer-open-index';
 }
@@ -81,24 +81,86 @@ $regionmainsettingsmenu = $buildregionmainsettings ? $OUTPUT->region_main_settin
 $header = $PAGE->activityheader;
 $headercontent = $header->export_for_template($renderer);
 
+// ── Fetch courses for our custom grid ──
+$selectedcategory = optional_param('categoryid', 0, PARAM_INT);
+
+// Get all top-level categories for filter pills
+$allcategories = core_course_category::get(0)->get_children();
+
+// Fetch courses — either from selected category or all
+if ($selectedcategory > 0) {
+    try {
+        $cat = core_course_category::get($selectedcategory);
+        $courses = $cat->get_courses(['recursive' => true, 'limit' => 50]);
+        $pagetitle = format_string($cat->name);
+    } catch (Exception $e) {
+        $courses = [];
+        $pagetitle = 'All Courses';
+    }
+} else {
+    $courses = core_course_category::get(0)->get_courses(['recursive' => true, 'limit' => 50]);
+    $pagetitle = 'All Courses';
+}
+
+// Build course data for rendering
+$coursedata = [];
+foreach ($courses as $course) {
+    $courseid = $course->id;
+    $courseobj = get_course($courseid);
+    $context = context_course::instance($courseid);
+
+    // Get course image
+    $courseimage = '';
+    $fs = get_file_storage();
+    $files = $fs->get_area_files($context->id, 'course', 'overviewfiles', false, 'filename', false);
+    foreach ($files as $f) {
+        if ($f->is_valid_image()) {
+            $courseimage = moodle_url::make_pluginfile_url(
+                $f->get_contextid(), $f->get_component(), $f->get_filearea(),
+                null, $f->get_filepath(), $f->get_filename()
+            )->out();
+            break;
+        }
+    }
+
+    $summary = strip_tags(format_text($courseobj->summary, FORMAT_HTML));
+    if (strlen($summary) > 100) {
+        $summary = substr($summary, 0, 100) . '...';
+    }
+
+    // Get category name
+    $catname = '';
+    if ($courseobj->category) {
+        $ccat = core_course_category::get($courseobj->category, IGNORE_MISSING);
+        if ($ccat) {
+            $catname = $ccat->name;
+        }
+    }
+
+    $coursedata[] = [
+        'id' => $courseid,
+        'fullname' => format_string($courseobj->fullname),
+        'summary' => $summary,
+        'image' => $courseimage,
+        'catname' => $catname,
+        'url' => (new moodle_url('/course/view.php', ['id' => $courseid]))->out(),
+        'numsections' => $courseobj->numsections ?? 8,
+    ];
+}
+
 // Build categories for the Explore mega-menu
 $explorecategories = [];
-try {
-    $topcats = core_course_category::get(0)->get_children();
-    foreach ($topcats as $cat) {
-        $children = $cat->get_children();
-        $subcats = [];
-        foreach ($children as $child) {
-            $subcats[] = ['id' => $child->id, 'name' => format_string($child->name)];
-        }
-        $explorecategories[] = [
-            'id' => $cat->id,
-            'name' => format_string($cat->name),
-            'children' => $subcats,
-        ];
+foreach ($allcategories as $cat) {
+    $children = $cat->get_children();
+    $subcats = [];
+    foreach ($children as $child) {
+        $subcats[] = ['id' => $child->id, 'name' => format_string($child->name)];
     }
-} catch (Exception $e) {
-    // If categories fail to load, just skip.
+    $explorecategories[] = [
+        'id' => $cat->id,
+        'name' => format_string($cat->name),
+        'children' => $subcats,
+    ];
 }
 
 $templatecontext = [
@@ -122,7 +184,12 @@ $templatecontext = [
     'headercontent' => $headercontent,
     'addblockbutton' => $addblockbutton,
     'lucentcategories' => json_encode($explorecategories),
+    // Custom course listing data
+    'lucentcoursegrid' => true,
+    'lucentcourses' => $coursedata,
+    'lucentallcategories' => $allcategories,
+    'lucentselectedcategory' => $selectedcategory,
+    'lucentpagetitle' => $pagetitle,
 ];
 
-// Use Lucent's drawers template instead of boost's
-echo $OUTPUT->render_from_template('theme_lucent/drawers', $templatecontext);
+echo $OUTPUT->render_from_template('theme_lucent/coursecategory', $templatecontext);

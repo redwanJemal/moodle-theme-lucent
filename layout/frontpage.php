@@ -50,6 +50,21 @@ $totalcategories = $DB->count_records('course_categories');
 // Get categories
 $categories = core_course_category::get(0)->get_children();
 
+// Build categories for the Explore mega-menu
+$explorecategories = [];
+foreach ($categories as $cat) {
+    $children = $cat->get_children();
+    $subcats = [];
+    foreach ($children as $child) {
+        $subcats[] = ['id' => $child->id, 'name' => format_string($child->name)];
+    }
+    $explorecategories[] = [
+        'id' => $cat->id,
+        'name' => format_string($cat->name),
+        'children' => $subcats,
+    ];
+}
+
 echo $OUTPUT->doctype();
 ?>
 <html <?php echo $OUTPUT->htmlattributes(); ?>>
@@ -79,7 +94,27 @@ echo $OUTPUT->doctype();
             <?php endif; ?>
         </a>
         <div class="lucent-fp-nav-links">
-            <a href="<?php echo new moodle_url('/course/index.php'); ?>">Courses</a>
+            <div class="lucent-fp-explore-wrapper">
+                <a href="<?php echo new moodle_url('/course/index.php'); ?>" class="lucent-fp-explore-trigger">Explore <span class="lucent-fp-explore-caret">&#9662;</span></a>
+                <div class="lucent-explore-dropdown">
+                    <?php foreach ($explorecategories as $ecat): ?>
+                    <div class="lucent-explore-item">
+                        <a href="<?php echo new moodle_url('/course/index.php', ['categoryid' => $ecat['id']]); ?>" class="lucent-explore-cat-link">
+                            <?php echo $ecat['name']; ?>
+                            <?php if (!empty($ecat['children'])): ?><span class="lucent-explore-arrow">&#9656;</span><?php endif; ?>
+                        </a>
+                        <?php if (!empty($ecat['children'])): ?>
+                        <div class="lucent-explore-submenu">
+                            <?php foreach ($ecat['children'] as $subcat): ?>
+                            <a href="<?php echo new moodle_url('/course/index.php', ['categoryid' => $subcat['id']]); ?>" class="lucent-explore-sub-link"><?php echo $subcat['name']; ?></a>
+                            <?php endforeach; ?>
+                        </div>
+                        <?php endif; ?>
+                    </div>
+                    <?php endforeach; ?>
+                    <a href="<?php echo new moodle_url('/course/index.php'); ?>" class="lucent-explore-viewall">View All Courses →</a>
+                </div>
+            </div>
             <?php if (!isloggedin() || isguestuser()): ?>
                 <a href="<?php echo new moodle_url('/login/index.php'); ?>" class="lucent-fp-nav-login">Log in</a>
                 <a href="<?php echo new moodle_url('/login/signup.php'); ?>" class="lucent-fp-nav-signup">Sign up</a>

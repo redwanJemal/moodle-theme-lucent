@@ -67,7 +67,7 @@ $THEME->layouts = [
         'defaultregion' => 'side-pre',
     ],
     'coursecategory' => [
-        'file' => 'drawers.php',
+        'file' => 'coursecategory.php',
         'regions' => ['side-pre'],
         'defaultregion' => 'side-pre',
     ],
