@@ -49,8 +49,55 @@ $THEME->scss = function($theme) {
 $THEME->extrascsscallback = 'theme_lucent_get_extra_scss';
 $THEME->prescsscallback = 'theme_lucent_get_pre_scss';
 
-// Layouts — inherit from boost but override login and frontpage.
+// Layouts — use Lucent drawers.php for all standard layouts, custom for login/frontpage.
 $THEME->layouts = [
+    'base' => [
+        'file' => 'drawers.php',
+        'regions' => ['side-pre'],
+        'defaultregion' => 'side-pre',
+    ],
+    'standard' => [
+        'file' => 'drawers.php',
+        'regions' => ['side-pre'],
+        'defaultregion' => 'side-pre',
+    ],
+    'course' => [
+        'file' => 'drawers.php',
+        'regions' => ['side-pre'],
+        'defaultregion' => 'side-pre',
+    ],
+    'coursecategory' => [
+        'file' => 'drawers.php',
+        'regions' => ['side-pre'],
+        'defaultregion' => 'side-pre',
+    ],
+    'incourse' => [
+        'file' => 'drawers.php',
+        'regions' => ['side-pre'],
+        'defaultregion' => 'side-pre',
+    ],
+    'mydashboard' => [
+        'file' => 'drawers.php',
+        'regions' => ['side-pre'],
+        'defaultregion' => 'side-pre',
+        'options' => ['nonavbar' => true, 'langmenu' => true],
+    ],
+    'mycourses' => [
+        'file' => 'drawers.php',
+        'regions' => ['side-pre'],
+        'defaultregion' => 'side-pre',
+        'options' => ['nonavbar' => true, 'langmenu' => true],
+    ],
+    'admin' => [
+        'file' => 'drawers.php',
+        'regions' => ['side-pre'],
+        'defaultregion' => 'side-pre',
+    ],
+    'report' => [
+        'file' => 'drawers.php',
+        'regions' => ['side-pre'],
+        'defaultregion' => 'side-pre',
+    ],
     'login' => [
         'file' => 'login.php',
         'regions' => [],

@@ -97,19 +97,36 @@ echo $OUTPUT->doctype();
 <section class="lucent-hero">
     <div class="lucent-hero-bg"></div>
     <div class="lucent-hero-content">
-        <div class="lucent-hero-badge">🎓 Online Learning Platform</div>
-        <h1 class="lucent-hero-title">Learn Without<br><span class="lucent-gradient-text">Limits</span></h1>
-        <p class="lucent-hero-subtitle">Discover courses taught by industry experts. Build skills that matter. Transform your career.</p>
+        <?php
+        $herobadge = get_config('theme_lucent', 'herobadge') ?: '🎓 Online Learning Platform';
+        $herotitle = get_config('theme_lucent', 'herotitle') ?: 'Learn Without Limits';
+        $herohighlight = get_config('theme_lucent', 'herohighlight') ?: 'Limits';
+        $herosubtitle = get_config('theme_lucent', 'herosubtitle') ?: 'Discover courses taught by industry experts. Build skills that matter. Transform your career.';
+        $herocta = get_config('theme_lucent', 'heroctaText') ?: 'Explore Courses';
+        $herocta2 = get_config('theme_lucent', 'herocta2text') ?: 'Get Started Free';
+
+        // Split title around the highlight word
+        $titlehtml = $herotitle;
+        if ($herohighlight && strpos($herotitle, $herohighlight) !== false) {
+            $titlehtml = str_replace($herohighlight, '<span class="lucent-gradient-text">' . $herohighlight . '</span>', $herotitle);
+        }
+        // Convert any newlines or "Without\n" to <br>
+        $titlehtml = str_replace(['\n', '|'], '<br>', $titlehtml);
+        ?>
+        <div class="lucent-hero-badge"><?php echo $herobadge; ?></div>
+        <h1 class="lucent-hero-title"><?php echo $titlehtml; ?></h1>
+        <p class="lucent-hero-subtitle"><?php echo $herosubtitle; ?></p>
         <div class="lucent-hero-actions">
             <a href="<?php echo new moodle_url('/course/index.php'); ?>" class="btn lucent-btn-primary">
-                Explore Courses
+                <?php echo $herocta; ?>
             </a>
             <?php if (!isloggedin() || isguestuser()): ?>
             <a href="<?php echo new moodle_url('/login/signup.php'); ?>" class="btn lucent-btn-outline">
-                Get Started Free
+                <?php echo $herocta2; ?>
             </a>
             <?php endif; ?>
         </div>
+        <?php $showstats = get_config('theme_lucent', 'showherostats'); if ($showstats === false || $showstats): ?>
         <div class="lucent-hero-stats">
             <div class="lucent-stat">
                 <span class="lucent-stat-number"><?php echo $totalcourses; ?>+</span>
@@ -126,6 +143,7 @@ echo $OUTPUT->doctype();
                 <span class="lucent-stat-label">Categories</span>
             </div>
         </div>
+        <?php endif; ?>
     </div>
 </section>
 
@@ -135,7 +153,10 @@ echo $OUTPUT->doctype();
 <!-- ══════════════════════════════════════════════════ -->
 <!-- CATEGORIES -->
 <!-- ══════════════════════════════════════════════════ -->
-<?php if (!empty($categories)): ?>
+<?php
+$showcategories = get_config('theme_lucent', 'showcategories');
+if (($showcategories === false || $showcategories) && !empty($categories)):
+?>
 <section class="lucent-section lucent-categories-section">
     <div class="lucent-container">
         <div class="lucent-section-header">

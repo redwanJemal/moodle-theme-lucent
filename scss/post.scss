@@ -555,47 +555,203 @@
 
 // ── DASHBOARD ENHANCEMENTS ───────────────────────────────────
 
-#page-my-index {
-  // Welcome section
-  .lucent-welcome {
-    background: linear-gradient(135deg, $primary, lighten($primary, 15%));
-    border-radius: var(--lucent-radius-lg);
-    padding: 2rem 2.5rem;
-    color: white;
-    margin-bottom: 2rem;
+// Dashboard page — overall polish
+#page-my-index,
+body.pagelayout-mydashboard {
+
+  // Kill the boring default page header and make it premium
+  #page-header {
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 40%, #312e81 70%, #4338ca 100%);
+    margin: -1rem -1rem 2rem -1rem;
+    padding: 2.5rem 2rem 2rem;
+    border-radius: 0 0 var(--lucent-radius-xl) var(--lucent-radius-xl);
     position: relative;
     overflow: hidden;
 
-    h2 {
-      font-size: 1.5rem;
-      font-weight: 800;
-      margin-bottom: 0.5rem;
-    }
-
-    p {
-      opacity: 0.85;
-      font-size: 0.9375rem;
+    &::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      right: -10%;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, transparent 70%);
+      pointer-events: none;
     }
 
     &::after {
       content: '';
       position: absolute;
-      top: -50%;
-      right: -20%;
+      bottom: -30%;
+      left: -5%;
       width: 300px;
       height: 300px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.1);
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .page-header-headings h1,
+    .page-header-headings .h2,
+    .page-header-headings h2,
+    .page-context-header .page-header-headings * {
+      color: #ffffff !important;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .breadcrumb {
+      position: relative;
+      z-index: 1;
+
+      .breadcrumb-item {
+        color: rgba(255,255,255,0.5);
+
+        a { color: rgba(255,255,255,0.65); &:hover { color: #ffffff; } }
+        &.active { color: rgba(255,255,255,0.9); }
+        + .breadcrumb-item::before { color: rgba(255,255,255,0.3); }
+      }
     }
   }
 
-  // Course overview clean up
+  // Course overview block — premium cards
   .block_myoverview {
-    .card {
-      border-radius: var(--lucent-radius-lg);
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
 
-      .card-img-top {
-        border-radius: var(--lucent-radius-lg) var(--lucent-radius-lg) 0 0;
+    .card-deck {
+      gap: 1.25rem;
+    }
+
+    .card,
+    .dashboard-card {
+      border-radius: var(--lucent-radius-xl) !important;
+      border: 1px solid var(--lucent-border) !important;
+      box-shadow: var(--lucent-shadow-sm) !important;
+      overflow: hidden;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+
+      &:hover {
+        transform: translateY(-4px) !important;
+        box-shadow: var(--lucent-shadow-lg) !important;
+        border-color: rgba(99, 102, 241, 0.2) !important;
+      }
+
+      .card-img-top,
+      .dashboard-card-img {
+        border-radius: var(--lucent-radius-xl) var(--lucent-radius-xl) 0 0 !important;
+        height: 160px;
+        object-fit: cover;
+      }
+
+      .card-body {
+        padding: 1.25rem !important;
+      }
+
+      .card-title,
+      .multiline {
+        font-weight: 700 !important;
+        font-size: 1rem !important;
+        letter-spacing: -0.01em;
+      }
+    }
+
+    // View controls (list/card/summary)
+    .paged-content-page-container {
+      margin-top: 0.5rem;
+    }
+  }
+
+  // Timeline block
+  .block_timeline {
+    border-radius: var(--lucent-radius-lg) !important;
+    border: 1px solid var(--lucent-border) !important;
+    box-shadow: var(--lucent-shadow-sm) !important;
+  }
+
+  // Block headers — cleaner
+  .block .card-body .card-title {
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  // Empty states
+  .block_myoverview [data-region="empty-message"],
+  .block_timeline .no-event-message {
+    padding: 3rem 2rem;
+    text-align: center;
+    color: var(--lucent-text-muted);
+    font-size: 0.9375rem;
+  }
+}
+
+// ── Block Styling (Global) ──
+
+.block {
+  border-radius: var(--lucent-radius-lg) !important;
+  border: 1px solid var(--lucent-border) !important;
+  box-shadow: var(--lucent-shadow-xs) !important;
+  background: var(--lucent-surface-elevated) !important;
+  overflow: hidden;
+
+  .card-body {
+    padding: 1.25rem;
+  }
+
+  .card-title {
+    font-weight: 700;
+    font-size: 0.9375rem;
+    letter-spacing: -0.01em;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--lucent-border-light);
+  }
+}
+
+// ── Main content area — better spacing ──
+
+body.pagelayout-mydashboard,
+body.pagelayout-mycourses {
+  #page-content {
+    padding-top: 0 !important;
+  }
+
+  .main-inner {
+    padding-top: 0 !important;
+  }
+
+  // Secondary nav tabs
+  .secondary-navigation {
+    margin-bottom: 1.5rem;
+
+    .nav-tabs {
+      border-bottom: 2px solid var(--lucent-border);
+
+      .nav-link {
+        font-weight: 600;
+        font-size: 0.875rem;
+        color: var(--lucent-text-muted);
+        border: none;
+        border-bottom: 2px solid transparent;
+        margin-bottom: -2px;
+        padding: 0.75rem 1rem;
+        transition: all 0.2s;
+
+        &:hover {
+          color: var(--lucent-text);
+          border-bottom-color: var(--lucent-border);
+        }
+
+        &.active {
+          color: var(--lucent-primary);
+          border-bottom-color: var(--lucent-primary);
+          background: transparent;
+        }
       }
     }
   }

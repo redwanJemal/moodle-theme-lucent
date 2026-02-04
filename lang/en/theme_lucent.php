@@ -22,124 +22,139 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+defined('MOODLE_INTERNAL') || die();
+
+// Plugin info.
 $string['pluginname'] = 'Lucent';
-$string['choosereadme'] = 'Lucent is a premium, mobile-first Moodle theme built on Boost with a modern, app-like design. Features glass-effect navigation, mobile bottom nav bar, premium course cards, smooth animations, dark mode, and dozens of customization options. Perfect for universities, corporate training, and online academies.';
+$string['choosereadme'] = 'Lucent is a premium, mobile-first Moodle theme with a glass navbar, dark mode, responsive dashboard, and full admin customization panel.';
 $string['configtitle'] = 'Lucent Settings';
 
-// ══════════════════════════════════════════════════════════════
-// General settings
-// ══════════════════════════════════════════════════════════════
+// ── Settings Tabs ──
 $string['generalsettings'] = 'General';
-$string['brandcolor'] = 'Brand colour';
-$string['brandcolor_desc'] = 'The primary brand colour used across the theme. This colour drives buttons, links, active states, and accent elements. Choose a colour that represents your brand identity.';
-$string['secondarycolor'] = 'Secondary colour';
-$string['secondarycolor_desc'] = 'A secondary accent colour used for subtle UI elements, muted text, and secondary buttons.';
-$string['successcolor'] = 'Success colour';
-$string['successcolor_desc'] = 'Colour used for success states, progress indicators, and completion badges.';
-
-// Fonts.
-$string['fontfamily'] = 'Body font';
-$string['fontfamily_desc'] = 'Choose the primary font used throughout the theme. All fonts are loaded from Google Fonts for optimal performance. "System Default" uses the device\'s native font stack.';
-$string['headingfont'] = 'Heading font';
-$string['headingfont_desc'] = 'Choose a different font for headings (h1–h6) to create visual hierarchy. Select "Same as body font" to use a single font throughout.';
-
-// ══════════════════════════════════════════════════════════════
-// Appearance
-// ══════════════════════════════════════════════════════════════
-$string['appearance'] = 'Appearance';
-$string['logo'] = 'Logo';
-$string['logo_desc'] = 'Upload your logo. Displayed in the header navigation bar. Recommended: SVG or PNG with transparent background, max height 48px.';
-$string['logocompact'] = 'Compact logo';
-$string['logocompact_desc'] = 'A smaller logo for mobile views and collapsed navigation. Recommended: square icon, 32×32px or similar.';
-$string['favicon'] = 'Favicon';
-$string['favicon_desc'] = 'Upload a favicon (.ico or .png). This small icon appears in browser tabs and bookmarks.';
-
-// Header style.
-$string['headerstyle'] = 'Header style';
-$string['headerstyle_desc'] = 'Choose the visual style of the top navigation bar. Glass (default) uses a frosted blur effect, Solid is a clean opaque background, and Transparent blends into the page content.';
-$string['headerstyle_glass'] = 'Glass (frosted blur)';
-$string['headerstyle_solid'] = 'Solid (opaque)';
-$string['headerstyle_transparent'] = 'Transparent';
-
-// Course card style.
-$string['coursecardstyle'] = 'Course card style';
-$string['coursecardstyle_desc'] = 'Choose how course cards appear on the dashboard. Rounded (default) uses soft corners, Sharp has square corners for a professional look, and Gradient adds a subtle colour overlay on images.';
-$string['coursecardstyle_rounded'] = 'Rounded (soft corners)';
-$string['coursecardstyle_sharp'] = 'Sharp (square corners)';
-$string['coursecardstyle_gradient'] = 'Gradient (colour overlay)';
-
-// Dark mode.
-$string['darkmode'] = 'Dark mode';
-$string['darkmode_desc'] = 'Enable the dark mode toggle, allowing users to switch between light and dark themes. The dark theme uses carefully chosen colours to reduce eye strain in low-light environments.';
-$string['darkmodetoggle'] = 'Toggle dark mode';
-
-// ══════════════════════════════════════════════════════════════
-// Login page
-// ══════════════════════════════════════════════════════════════
+$string['brandingsettings'] = 'Branding';
+$string['herosettings'] = 'Hero / Frontpage';
 $string['loginsettings'] = 'Login Page';
-$string['loginbg'] = 'Login background image';
-$string['loginbg_desc'] = 'Upload a background image for the login page. For best results, use a high-resolution image (1920×1080 or larger). The image will be overlaid with a gradient for readability.';
-$string['loginlogo'] = 'Login logo';
-$string['loginlogo_desc'] = 'A logo displayed prominently on the login page. If not set, the main site logo will be used.';
-$string['loginheading'] = 'Login heading';
-$string['loginheading_desc'] = 'Custom heading text displayed on the login page above the form.';
-$string['loginheading_default'] = 'Welcome Back';
-$string['loginsubheading'] = 'Login subheading';
-$string['loginsubheading_desc'] = 'A short tagline or description displayed below the login heading.';
-$string['loginsubheading_default'] = 'Sign in to continue your learning journey';
-
-// ══════════════════════════════════════════════════════════════
-// Mobile settings
-// ══════════════════════════════════════════════════════════════
-$string['mobilesettings'] = 'Mobile';
-$string['mobilebottomnav'] = 'Mobile bottom navigation';
-$string['mobilebottomnav_desc'] = 'Enable the fixed bottom navigation bar on mobile devices. This provides quick access to Home, Courses, Search, Notifications, and Profile — like a native mobile app. Disable if you prefer the traditional mobile layout.';
-
-// ══════════════════════════════════════════════════════════════
-// Dashboard
-// ══════════════════════════════════════════════════════════════
-$string['dashboardsettings'] = 'Dashboard';
-$string['heroimage'] = 'Hero image';
-$string['heroimage_desc'] = 'A hero banner image displayed at the top of the dashboard. Recommended size: 1200×400px.';
-
-// ══════════════════════════════════════════════════════════════
-// Footer
-// ══════════════════════════════════════════════════════════════
+$string['headersettings'] = 'Header & Layout';
 $string['footersettings'] = 'Footer';
-$string['footercolumns'] = 'Footer columns';
-$string['footercolumns_desc'] = 'Choose how many columns to display in the footer area. More columns work better on desktop, fewer columns are cleaner on all screen sizes.';
-$string['footertext'] = 'Footer text';
-$string['footertext_desc'] = 'Custom HTML or text displayed in the footer area. You can use this for legal notices, contact information, or additional links.';
-
-// ══════════════════════════════════════════════════════════════
-// Social media
-// ══════════════════════════════════════════════════════════════
-$string['socialsettings'] = 'Social Media';
-$string['facebook'] = 'Facebook URL';
-$string['facebook_desc'] = 'Enter the full URL to your Facebook page (e.g., https://facebook.com/yourpage). Leave empty to hide the Facebook icon.';
-$string['twitter'] = 'Twitter / X URL';
-$string['twitter_desc'] = 'Enter the full URL to your Twitter/X profile (e.g., https://x.com/yourhandle). Leave empty to hide the icon.';
-$string['instagram'] = 'Instagram URL';
-$string['instagram_desc'] = 'Enter the full URL to your Instagram profile (e.g., https://instagram.com/yourprofile). Leave empty to hide the icon.';
-$string['linkedin'] = 'LinkedIn URL';
-$string['linkedin_desc'] = 'Enter the full URL to your LinkedIn page (e.g., https://linkedin.com/company/yourcompany). Leave empty to hide the icon.';
-$string['youtube'] = 'YouTube URL';
-$string['youtube_desc'] = 'Enter the full URL to your YouTube channel (e.g., https://youtube.com/@yourchannel). Leave empty to hide the icon.';
-
-// ══════════════════════════════════════════════════════════════
-// Advanced
-// ══════════════════════════════════════════════════════════════
 $string['advancedsettings'] = 'Advanced';
-$string['customscss'] = 'Custom SCSS';
-$string['customscss_desc'] = 'Add custom SCSS rules that will be compiled with the theme. Use SCSS variables (like $primary) for consistency. This is processed at compile time.';
-$string['customcss'] = 'Custom CSS';
-$string['customcss_desc'] = 'Inject raw CSS directly into every page. Use this for quick overrides or third-party integrations. This CSS is added as-is, without SCSS processing.';
-$string['googleanalytics'] = 'Google Analytics ID';
-$string['googleanalytics_desc'] = 'Enter your Google Analytics measurement ID (e.g., G-XXXXXXXXXX or UA-XXXXXXXX-X) to enable site tracking. Leave empty to disable analytics. Supports both GA4 and Universal Analytics.';
-$string['backgroundimage'] = 'Background image';
-$string['backgroundimage_desc'] = 'Upload a full-page background image. This will appear behind all content as a subtle texture or pattern.';
 
-// ══════════════════════════════════════════════════════════════
-// Region
-// ══════════════════════════════════════════════════════════════
-$string['region-side-pre'] = 'Right';
+// ── General ──
+$string['brandcolor'] = 'Brand Color';
+$string['brandcolor_desc'] = 'Primary accent color used throughout the theme — buttons, links, active states.';
+$string['secondarycolor'] = 'Secondary Color';
+$string['secondarycolor_desc'] = 'Used for secondary UI elements, muted text, and subtle accents.';
+$string['successcolor'] = 'Success Color';
+$string['successcolor_desc'] = 'Used for completion indicators, success alerts, and progress bars.';
+
+$string['colorpreset'] = 'Color Preset';
+$string['colorpreset_desc'] = 'Quick-apply a color scheme. Choose "Custom" to use the color pickers above.';
+$string['preset_indigo'] = '💜 Indigo (Default)';
+$string['preset_blue'] = '💙 Ocean Blue';
+$string['preset_emerald'] = '💚 Emerald Green';
+$string['preset_rose'] = '💗 Rose Pink';
+$string['preset_amber'] = '🧡 Amber Orange';
+$string['preset_violet'] = '💟 Deep Violet';
+$string['preset_custom'] = '🎨 Custom (use color pickers)';
+
+$string['fontfamily'] = 'Font Family';
+$string['fontfamily_desc'] = 'Primary font used for all text. Google Fonts loaded automatically.';
+$string['headingfont'] = 'Heading Font';
+$string['headingfont_desc'] = 'Optional separate font for headings (h1-h6). Select "Same as primary" to use one font.';
+$string['sameasprimary'] = 'Same as primary font';
+
+$string['enabledarkmode'] = 'Enable Dark Mode';
+$string['enabledarkmode_desc'] = 'Add a dark mode toggle for users. When enabled, users can switch between light and dark mode.';
+
+// ── Branding ──
+$string['logo'] = 'Full Logo';
+$string['logo_desc'] = 'Full-size logo displayed on the login page and branding areas. Recommended: SVG or PNG with transparent background.';
+$string['logocompact'] = 'Navbar Logo';
+$string['logocompact_desc'] = 'Compact logo for the navigation bar. Recommended height: 36px.';
+$string['favicon'] = 'Favicon';
+$string['favicon_desc'] = 'Browser tab icon. Upload .ico or .png file (16x16 or 32x32 pixels).';
+$string['loginlogo'] = 'Login Page Logo';
+$string['loginlogo_desc'] = 'Optional logo specifically for the login page. Falls back to the full logo if not set.';
+
+// ── Hero / Frontpage ──
+$string['herobadge'] = 'Hero Badge Text';
+$string['herobadge_desc'] = 'Small badge text above the hero title. Supports emoji. Example: "🎓 Online Learning Platform"';
+$string['herotitle'] = 'Hero Title';
+$string['herotitle_desc'] = 'Main headline text in the hero section. Keep it short and impactful.';
+$string['herohighlight'] = 'Highlight Word';
+$string['herohighlight_desc'] = 'Word from the title to highlight with gradient color. Must match exactly.';
+$string['herosubtitle'] = 'Hero Subtitle';
+$string['herosubtitle_desc'] = 'Supporting text below the hero title. 1-2 sentences recommended.';
+$string['heroimage'] = 'Hero Background Image';
+$string['heroimage_desc'] = 'Optional background image for the hero section. Will overlay the gradient. Recommended: 1920x800px.';
+$string['heroctatext'] = 'Primary Button Text';
+$string['heroctatext_desc'] = 'Text for the main call-to-action button in the hero.';
+$string['herocta2text'] = 'Secondary Button Text';
+$string['herocta2text_desc'] = 'Text for the secondary button. Only shown to non-logged-in users.';
+$string['showherostats'] = 'Show Statistics';
+$string['showherostats_desc'] = 'Display course/student/category counts in the hero section.';
+$string['showcategories'] = 'Show Categories Section';
+$string['showcategories_desc'] = 'Display the "Browse Categories" grid on the frontpage.';
+$string['coursesperrow'] = 'Courses Per Row';
+$string['coursesperrow_desc'] = 'Number of course cards per row on desktop.';
+
+// ── Login Page ──
+$string['loginheading'] = 'Login Heading';
+$string['loginheading_desc'] = 'Main heading on the login form.';
+$string['loginheading_default'] = 'Welcome back';
+$string['loginsubheading'] = 'Login Subheading';
+$string['loginsubheading_desc'] = 'Text below the login heading.';
+$string['loginsubheading_default'] = 'Sign in to your account to continue';
+$string['loginbrandheadline'] = 'Brand Panel Headline';
+$string['loginbrandheadline_desc'] = 'Large headline on the left branding panel (desktop only).';
+$string['loginbrandtagline'] = 'Brand Panel Tagline';
+$string['loginbrandtagline_desc'] = 'Tagline text below the headline on the branding panel.';
+$string['loginbg'] = 'Login Background Image';
+$string['loginbg_desc'] = 'Background image for the login brand panel. Replaces the default gradient.';
+
+// ── Header & Layout ──
+$string['headerstyle'] = 'Header Style';
+$string['headerstyle_desc'] = 'Visual style for the navigation bar.';
+$string['headerstyle_glass'] = '✨ Glass (blur + transparent)';
+$string['headerstyle_solid'] = '◼️ Solid (opaque background)';
+$string['headerstyle_transparent'] = '👻 Transparent (no background)';
+
+$string['coursecardstyle'] = 'Course Card Style';
+$string['coursecardstyle_desc'] = 'Visual style for course cards on the dashboard.';
+$string['cardstyle_rounded'] = '🔵 Rounded (Default)';
+$string['cardstyle_sharp'] = '🔲 Sharp corners';
+$string['cardstyle_gradient'] = '🌈 Gradient overlay';
+
+$string['mobilebottomnav'] = 'Mobile Bottom Navigation';
+$string['mobilebottomnav_desc'] = 'Show the app-like bottom navigation bar on mobile devices.';
+
+// ── Footer ──
+$string['footerdesc'] = 'Footer Description';
+$string['footerdesc_desc'] = 'Short text about your organization, shown in the footer.';
+$string['footercol1title'] = 'Column 1 Title';
+$string['footercol1title_desc'] = 'Heading for the first footer links column.';
+$string['footercol1'] = 'Column 1 Links';
+$string['footercol1_desc'] = 'One link per line in format: Link Text|/url';
+$string['footercol2title'] = 'Column 2 Title';
+$string['footercol2title_desc'] = 'Heading for the second footer links column.';
+$string['footercol2'] = 'Column 2 Links';
+$string['footercol2_desc'] = 'One link per line in format: Link Text|/url';
+
+$string['socialfacebook'] = 'Facebook URL';
+$string['socialtwitter'] = 'Twitter / X URL';
+$string['socialinstagram'] = 'Instagram URL';
+$string['sociallinkedin'] = 'LinkedIn URL';
+$string['socialyoutube'] = 'YouTube URL';
+$string['social_desc'] = 'Full URL to your {$a} profile. Leave empty to hide.';
+
+$string['copyright'] = 'Copyright Text';
+$string['copyright_desc'] = 'Custom copyright text. Leave empty for default "© [year] [sitename]".';
+
+// ── Advanced ──
+$string['customscss'] = 'Custom SCSS';
+$string['customscss_desc'] = 'Custom SCSS code — compiled with the theme. Use $primary, $secondary, etc. variables.';
+$string['customcss'] = 'Custom CSS';
+$string['customcss_desc'] = 'Raw CSS injected after all other styles. Use for quick overrides.';
+$string['googleanalytics'] = 'Google Analytics ID';
+$string['googleanalytics_desc'] = 'Enter your GA4 (G-XXXXXXXX) or Universal Analytics (UA-XXXXXXXX) tracking ID.';
+$string['headinjection'] = 'Head Injection';
+$string['headinjection_desc'] = 'Custom HTML/JS injected into the <head>. Use for chat widgets, tracking pixels, etc.';

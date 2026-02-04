@@ -65,8 +65,12 @@ echo $OUTPUT->doctype(); ?>
                     </div>
                 <?php endif; ?>
             </a>
-            <h1 class="lucent-auth-headline">Start your<br>learning journey</h1>
-            <p class="lucent-auth-tagline">Access thousands of courses, connect with expert instructors, and build skills that matter.</p>
+            <?php
+            $brandheadline = get_config('theme_lucent', 'loginbrandheadline') ?: 'Start your learning journey';
+            $brandtagline = get_config('theme_lucent', 'loginbrandtagline') ?: 'Access thousands of courses, connect with expert instructors, and build skills that matter.';
+            ?>
+            <h1 class="lucent-auth-headline"><?php echo str_replace(['\n', '|'], '<br>', $brandheadline); ?></h1>
+            <p class="lucent-auth-tagline"><?php echo $brandtagline; ?></p>
             <div class="lucent-auth-stats-row">
                 <div class="lucent-auth-stat-pill">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/></svg>
@@ -101,8 +105,8 @@ echo $OUTPUT->doctype(); ?>
             </div>
 
             <div class="lucent-auth-form-header">
-                <h2>Welcome back</h2>
-                <p>Sign in to your account to continue</p>
+                <h2><?php echo get_config('theme_lucent', 'loginheading') ?: get_string('loginheading_default', 'theme_lucent'); ?></h2>
+                <p><?php echo get_config('theme_lucent', 'loginsubheading') ?: get_string('loginsubheading_default', 'theme_lucent'); ?></p>
             </div>
 
             <div class="lucent-auth-form-body">
