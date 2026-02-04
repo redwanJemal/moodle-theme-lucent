@@ -955,22 +955,23 @@ body.pagelayout-mydashboard {
     border: 1px solid var(--lucent-border) !important;
     box-shadow: var(--lucent-shadow-sm) !important;
 
-    // Fix overlapping dropdown text in timeline controls
-    [data-region="timeline-view-controls"],
-    [data-region="view-selector"] {
-      display: flex;
-      flex-wrap: wrap;
+    // Fix overlapping dropdowns in timeline controls
+    .block-timeline .row.g-0 {
+      display: flex !important;
+      flex-wrap: wrap !important;
       gap: 0.5rem;
       align-items: center;
 
-      .dropdown,
-      .custom-select,
-      select {
-        min-width: 140px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+      > div {
+        flex: 0 0 auto !important;
+        width: auto !important;
       }
+    }
+
+    [data-region="day-filter"] .btn,
+    [data-region="view-selector"] .btn {
+      white-space: nowrap;
+      font-size: 0.8125rem;
     }
   }
 
