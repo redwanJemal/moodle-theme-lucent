@@ -56,6 +56,9 @@ echo $OUTPUT->doctype();
 <head>
     <title><?php echo $OUTPUT->page_title(); ?></title>
     <link rel="shortcut icon" href="<?php echo $OUTPUT->favicon(); ?>" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <?php echo $OUTPUT->standard_head_html(); ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -64,7 +67,29 @@ echo $OUTPUT->doctype();
 <?php echo $OUTPUT->standard_top_of_body_html(); ?>
 
 <!-- Navbar -->
-<?php echo $OUTPUT->full_header(); ?>
+<nav class="lucent-fp-navbar">
+    <div class="lucent-container lucent-fp-navbar-inner">
+        <a href="<?php echo $CFG->wwwroot; ?>" class="lucent-fp-brand">
+            <?php
+            $logo = $OUTPUT->get_compact_logo_url();
+            if ($logo): ?>
+                <img src="<?php echo $logo; ?>" alt="<?php echo format_string($SITE->shortname); ?>" class="lucent-fp-logo">
+            <?php else: ?>
+                <span class="lucent-fp-sitename"><?php echo format_string($SITE->shortname); ?></span>
+            <?php endif; ?>
+        </a>
+        <div class="lucent-fp-nav-links">
+            <a href="<?php echo new moodle_url('/course/index.php'); ?>">Courses</a>
+            <?php if (!isloggedin() || isguestuser()): ?>
+                <a href="<?php echo new moodle_url('/login/index.php'); ?>" class="lucent-fp-nav-login">Log in</a>
+                <a href="<?php echo new moodle_url('/login/signup.php'); ?>" class="lucent-fp-nav-signup">Sign up</a>
+            <?php else: ?>
+                <a href="<?php echo new moodle_url('/my/'); ?>">Dashboard</a>
+                <a href="<?php echo new moodle_url('/user/profile.php'); ?>"><?php echo fullname($USER); ?></a>
+            <?php endif; ?>
+        </div>
+    </div>
+</nav>
 
 <!-- ══════════════════════════════════════════════════ -->
 <!-- HERO SECTION -->

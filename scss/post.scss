@@ -299,12 +299,107 @@ body#page-login-index.lucent-dark {
   #topofscroll, .drawers, #page-footer { display: none !important; }
   .main-inner { padding: 0 !important; max-width: none !important; }
   #region-main { padding: 0 !important; }
+  #page-header { display: none !important; }
+  padding-bottom: 0 !important;
 }
 
 .lucent-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px;
+}
+
+// ── Frontpage Navbar ──────────────────────────────────────────
+
+.lucent-fp-navbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 0 24px;
+}
+
+.lucent-fp-navbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 72px;
+}
+
+.lucent-fp-brand {
+  text-decoration: none !important;
+  display: flex;
+  align-items: center;
+}
+
+.lucent-fp-logo {
+  height: 36px;
+  width: auto;
+}
+
+.lucent-fp-sitename {
+  font-weight: 800;
+  font-size: 1.25rem;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.lucent-fp-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none !important;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.2s;
+
+    &:hover {
+      color: #ffffff;
+      background: rgba(255,255,255,0.1);
+    }
+  }
+
+  .lucent-fp-nav-login {
+    color: rgba(255,255,255,0.9);
+    font-weight: 600;
+  }
+
+  .lucent-fp-nav-signup {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    color: #ffffff;
+    font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.2);
+
+    &:hover {
+      background: rgba(255,255,255,0.25);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .lucent-fp-navbar {
+    padding: 0 16px;
+  }
+
+  .lucent-fp-navbar-inner {
+    min-height: 60px;
+  }
+
+  .lucent-fp-nav-links {
+    gap: 4px;
+
+    a {
+      font-size: 0.8125rem;
+      padding: 6px 10px;
+    }
+  }
 }
 
 // ── Hero ──────────────────────────────────────────────────────
@@ -371,7 +466,7 @@ body#page-login-index.lucent-dark {
 
 .lucent-hero-title {
   font-family: 'Inter', -apple-system, sans-serif;
-  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-size: #{"clamp(2.5rem, 6vw, 4rem)"};
   font-weight: 900;
   color: #ffffff;
   line-height: 1.1;
@@ -387,7 +482,7 @@ body#page-login-index.lucent-dark {
 }
 
 .lucent-hero-subtitle {
-  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-size: #{"clamp(1rem, 2vw, 1.25rem)"};
   color: rgba(255,255,255,0.65);
   line-height: 1.6;
   margin: 0 auto 32px;
@@ -493,7 +588,7 @@ body#page-login-index.lucent-dark {
 }
 
 .lucent-section-title {
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-size: #{"clamp(1.5rem, 3vw, 2rem)"};
   font-weight: 800;
   color: #1e293b;
   letter-spacing: -0.02em;
@@ -716,7 +811,7 @@ body#page-login-index.lucent-dark {
   }
 
   h2 {
-    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    font-size: #{"clamp(1.5rem, 3vw, 2.25rem)"};
     font-weight: 800;
     color: white;
     margin: 0 0 12px;
