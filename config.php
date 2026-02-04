@@ -103,10 +103,21 @@ $THEME->layouts = [
         'regions' => [],
         'options' => ['langmenu' => true],
     ],
+    // Moodle's signup page uses 'login' pagelayout by default, but we explicitly
+    // define it here to ensure it routes through our custom login.php layout.
+    // The login.php layout auto-detects signup via $PAGE->pagetype.
     'frontpage' => [
         'file' => 'frontpage.php',
         'regions' => ['side-pre'],
         'defaultregion' => 'side-pre',
         'options' => ['nonavbar' => true],
+    ],
+    'error' => [
+        'file' => 'error.php',
+        'regions' => [],
+    ],
+    'maintenance' => [
+        'file' => 'maintenance.php',
+        'regions' => [],
     ],
 ];

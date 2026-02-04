@@ -149,6 +149,15 @@ $string['social_desc'] = 'Full URL to your {$a} profile. Leave empty to hide.';
 $string['copyright'] = 'Copyright Text';
 $string['copyright_desc'] = 'Custom copyright text. Leave empty for default "© [year] [sitename]".';
 
+// ── Error Page ──
+$string['error_pagetitle'] = 'Page not found';
+$string['error_message'] = 'The page you\'re looking for doesn\'t exist or has been moved. Let\'s get you back on track.';
+$string['error_gohome'] = 'Back to Home';
+
+// ── Maintenance Page ──
+$string['maintenance_title'] = 'We\'ll be back soon';
+$string['maintenance_message'] = 'We\'re making some improvements to bring you a better experience. Please check back in a few minutes.';
+
 // ── Advanced ──
 $string['customscss'] = 'Custom SCSS';
 $string['customscss_desc'] = 'Custom SCSS code — compiled with the theme. Use $primary, $secondary, etc. variables.';

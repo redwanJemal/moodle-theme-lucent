@@ -468,35 +468,262 @@
   }
 }
 
-// ── Signup form: compact inputs ──
+// ── Signup form: compact inputs + full styling ──
 
 .lucent-signup-form {
-  .fitem {
-    margin-bottom: 0.75rem !important;
+  // Make the form scrollable on mobile within the split-screen layout
+  max-height: 65vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 4px;
+  margin-right: -4px;
+
+  // Custom scrollbar
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
   }
 
-  .form-control {
-    padding: 0.625rem 0.875rem !important;
-    font-size: 0.875rem !important;
-    min-height: 42px !important;
+  // Kill the default Moodle login heading (we provide our own)
+  .login-heading,
+  #page-header {
+    display: none !important;
   }
 
-  label {
+  // All form items — compact spacing
+  .fitem,
+  .form-group {
+    margin-bottom: 0.875rem !important;
+  }
+
+  // Labels
+  label,
+  .col-form-label {
     font-size: 0.8125rem !important;
+    font-weight: 600 !important;
+    color: #334155 !important;
     margin-bottom: 0.25rem !important;
+    display: block;
   }
 
   .form-label-fitem {
     margin-bottom: 0.25rem !important;
   }
 
-  // Password policy text — compact
+  // All form inputs — consistent styling
+  .form-control,
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="tel"],
+  input[type="url"],
+  select,
+  select.custom-select,
+  textarea {
+    border: 1.5px solid #e2e8f0 !important;
+    border-radius: 10px !important;
+    padding: 0.625rem 0.875rem !important;
+    font-size: 0.875rem !important;
+    background: #f8fafc !important;
+    color: #0f172a !important;
+    transition: all 0.2s ease !important;
+    height: auto !important;
+    min-height: 42px !important;
+    width: 100%;
+
+    &::placeholder {
+      color: #94a3b8 !important;
+      font-weight: 400;
+    }
+
+    &:focus {
+      border-color: #6366f1 !important;
+      background: #ffffff !important;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1) !important;
+      outline: none !important;
+    }
+  }
+
+  // Select dropdown
+  select.custom-select,
+  select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 0.75rem center !important;
+    background-size: 16px !important;
+    padding-right: 2.5rem !important;
+  }
+
+  // Password unmask wrapper
+  .form-passwordunmask {
+    position: relative;
+
+    .form-control {
+      padding-right: 3rem !important;
+    }
+
+    .btn {
+      position: absolute;
+      right: 4px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent !important;
+      border: none !important;
+      color: #94a3b8 !important;
+      padding: 0.25rem 0.5rem !important;
+      min-height: auto !important;
+      box-shadow: none !important;
+
+      &:hover {
+        color: #6366f1 !important;
+      }
+    }
+  }
+
+  // Description text under fields
   .form-passwordunmask-wrapper ~ .form-text,
-  .fdescription {
+  .fdescription,
+  .form-text {
     font-size: 0.75rem !important;
-    color: var(--lucent-text-light) !important;
+    color: #94a3b8 !important;
     line-height: 1.4;
     margin-top: 0.25rem;
+  }
+
+  // Required field asterisk
+  abbr[title] {
+    color: #ef4444;
+    text-decoration: none;
+  }
+
+  // reCAPTCHA styling
+  .recaptcha_widget_div,
+  .g-recaptcha,
+  [id*="recaptcha"],
+  .auth_email_signup_captcha {
+    margin: 1rem 0;
+    display: flex;
+    justify-content: center;
+
+    > div {
+      transform-origin: center;
+    }
+  }
+
+  // Submit button
+  #id_submitbutton,
+  .btn-primary,
+  [type="submit"].btn-primary {
+    width: 100%;
+    padding: 0.75rem 1.5rem !important;
+    font-size: 0.9375rem !important;
+    font-weight: 700 !important;
+    border-radius: 10px !important;
+    background: linear-gradient(135deg, #6366f1, #4f46e5) !important;
+    border: none !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3) !important;
+    transition: all 0.2s ease !important;
+    cursor: pointer;
+    min-height: 48px;
+    margin-top: 0.5rem;
+
+    &:hover {
+      transform: translateY(-1px) !important;
+      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4) !important;
+      background: linear-gradient(135deg, #4f46e5, #4338ca) !important;
+    }
+  }
+
+  // Cancel button
+  #id_cancel,
+  .btn-secondary,
+  .btn-cancel {
+    width: 100%;
+    padding: 0.625rem 1.5rem !important;
+    font-size: 0.875rem !important;
+    font-weight: 600 !important;
+    border-radius: 10px !important;
+    background: transparent !important;
+    border: 1.5px solid #e2e8f0 !important;
+    color: #64748b !important;
+    margin-top: 0.5rem;
+    min-height: 44px;
+
+    &:hover {
+      border-color: #cbd5e1 !important;
+      background: #f8fafc !important;
+      color: #334155 !important;
+    }
+  }
+
+  // Error / validation messages
+  .error,
+  .form-control-feedback,
+  .invalid-feedback {
+    font-size: 0.75rem !important;
+    color: #ef4444 !important;
+    margin-top: 0.25rem;
+  }
+
+  .form-control.is-invalid,
+  .form-control:invalid {
+    border-color: #ef4444 !important;
+
+    &:focus {
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+    }
+  }
+
+  // Moodle form layout tweaks — remove grid complexity
+  .fcontainer {
+    .form-inline,
+    .fitem .felement {
+      width: 100%;
+    }
+
+    // Two-column label+field layout → stack vertically
+    .col-md-3,
+    .col-md-9 {
+      flex: 0 0 100% !important;
+      max-width: 100% !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+  }
+
+  // Alert / notices
+  .alert {
+    border-radius: 10px !important;
+    font-size: 0.8125rem;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+  }
+}
+
+// ── Desktop — unlock signup scroll height ──
+@media (min-width: 1024px) {
+  .lucent-signup-form {
+    max-height: 70vh;
+  }
+}
+
+// ── Mobile signup — adjust for small screens ──
+@media (max-width: 767px) {
+  .lucent-signup-form {
+    max-height: 55vh;
+
+    .g-recaptcha {
+      transform: scale(0.9);
+      transform-origin: center;
+    }
   }
 }
 
@@ -1926,6 +2153,325 @@ body.pagelayout-coursecategory {
 
     .btn { text-align: center; }
   }
+}
+
+// ══════════════════════════════════════════════════════════════
+// PASSWORD POLICY INFO BOX — Modern compact styling
+// ══════════════════════════════════════════════════════════════
+
+.password-policy-informationbox {
+  background: #eff6ff !important;
+  border: 1px solid #bfdbfe !important;
+  border-radius: 10px !important;
+  padding: 0.75rem 1rem !important;
+  margin-top: 0.5rem !important;
+  margin-bottom: 0.75rem !important;
+  font-size: 0.75rem !important;
+  line-height: 1.5 !important;
+  color: #1e40af !important;
+  position: relative;
+
+  // Info icon prefix
+  &::before {
+    content: "ℹ️";
+    font-size: 0.875rem;
+    margin-right: 0.375rem;
+    vertical-align: middle;
+  }
+
+  // Style the list items
+  ul, ol {
+    margin: 0.375rem 0 0 0 !important;
+    padding-left: 1.25rem !important;
+    list-style: none !important;
+
+    li {
+      position: relative;
+      padding-left: 0.25rem;
+      margin-bottom: 0.125rem;
+      color: #1e40af;
+
+      &::before {
+        content: "○";
+        position: absolute;
+        left: -1rem;
+        color: #93c5fd;
+        font-size: 0.625rem;
+        line-height: 1.8;
+      }
+
+      // Met requirements — when Moodle adds "ok" class
+      &.good,
+      &.text-success {
+        color: #065f46;
+
+        &::before {
+          content: "●";
+          color: #10b981;
+        }
+      }
+    }
+  }
+
+  // If it's just plain text (not a list)
+  > span, > div {
+    display: inline;
+  }
+}
+
+// Dark mode password policy
+.lucent-dark .password-policy-informationbox,
+[data-theme="dark"] .password-policy-informationbox {
+  background: rgba(59, 130, 246, 0.1) !important;
+  border-color: rgba(59, 130, 246, 0.2) !important;
+  color: #93c5fd !important;
+
+  ul li {
+    color: #93c5fd;
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+// ERROR PAGE — Branded 404
+// ══════════════════════════════════════════════════════════════
+
+.lucent-error-page {
+  margin: 0 !important;
+  padding: 0 !important;
+
+  .navbar, #page-header, #page-footer, .breadcrumb,
+  #page-wrapper, .drawers, #topofscroll, .lucent-bottom-nav {
+    display: none !important;
+  }
+}
+
+.lucent-error-container,
+.lucent-maintenance-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 40%, #312e81 70%, #4338ca 100%);
+}
+
+// Shared orbs / grid for error + maintenance
+.lucent-error-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.lucent-error-orb-1 {
+  top: -15%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, transparent 70%);
+  animation: lucent-float 8s ease-in-out infinite alternate;
+}
+
+.lucent-error-orb-2 {
+  bottom: -20%;
+  left: -15%;
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, transparent 70%);
+  animation: lucent-float 10s ease-in-out infinite alternate-reverse;
+}
+
+.lucent-error-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+@keyframes lucent-float {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(30px, -20px); }
+}
+
+// Error content
+.lucent-error-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 2rem;
+  max-width: 520px;
+}
+
+.lucent-error-icon {
+  color: rgba(255, 255, 255, 0.3);
+  margin-bottom: 1.5rem;
+
+  svg {
+    width: 64px;
+    height: 64px;
+  }
+}
+
+.lucent-error-code {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: #{"clamp(6rem, 15vw, 10rem)"};
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.08);
+  letter-spacing: -0.05em;
+  line-height: 1;
+  margin: 0;
+  position: relative;
+
+  // Gradient overlay text
+  background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.lucent-error-title {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  margin: 0.5rem 0 1rem;
+}
+
+.lucent-error-message {
+  font-size: 1.0625rem;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.6;
+  margin: 0 0 2rem;
+}
+
+.lucent-error-main-content {
+  margin-bottom: 1.5rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.875rem;
+
+  a {
+    color: #818cf8;
+    &:hover { color: #a5b4fc; }
+  }
+
+  // Hide Moodle's default error debug info unless needed
+  .errorbox {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: left;
+    margin-top: 1rem;
+  }
+}
+
+.lucent-error-actions {
+  margin-bottom: 3rem;
+
+  .lucent-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.lucent-error-footer {
+  color: rgba(255, 255, 255, 0.2);
+  font-size: 0.8125rem;
+}
+
+// ══════════════════════════════════════════════════════════════
+// MAINTENANCE PAGE — Branded maintenance mode
+// ══════════════════════════════════════════════════════════════
+
+.lucent-maintenance-page {
+  margin: 0 !important;
+  padding: 0 !important;
+
+  .navbar, #page-header, #page-footer, .breadcrumb,
+  #page-wrapper, .drawers, #topofscroll, .lucent-bottom-nav {
+    display: none !important;
+  }
+}
+
+.lucent-maintenance-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 2rem;
+  max-width: 520px;
+}
+
+// Animated spinner
+.lucent-maintenance-spinner {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 2rem;
+}
+
+.lucent-spinner-ring {
+  position: absolute;
+  inset: 0;
+  border: 2px solid transparent;
+  border-top-color: rgba(99, 102, 241, 0.6);
+  border-radius: 50%;
+  animation: lucent-spin 1.2s linear infinite;
+}
+
+.lucent-spinner-ring-2 {
+  inset: 8px;
+  border-top-color: rgba(168, 85, 247, 0.4);
+  animation-duration: 1.8s;
+  animation-direction: reverse;
+}
+
+.lucent-spinner-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+@keyframes lucent-spin {
+  to { transform: rotate(360deg); }
+}
+
+.lucent-maintenance-title {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  margin: 0 0 1rem;
+}
+
+.lucent-maintenance-message {
+  font-size: 1.0625rem;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.6;
+  margin: 0 0 2rem;
+  max-width: 420px;
+}
+
+.lucent-maintenance-main-content {
+  margin-bottom: 1.5rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.875rem;
+
+  a {
+    color: #818cf8;
+    &:hover { color: #a5b4fc; }
+  }
+}
+
+.lucent-maintenance-footer {
+  margin-top: 3rem;
+  color: rgba(255, 255, 255, 0.2);
+  font-size: 0.8125rem;
 }
 
 // ── PRINT STYLES ─────────────────────────────────────────────

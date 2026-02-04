@@ -190,19 +190,40 @@ function theme_lucent_get_extra_scss($theme) {
  */
 function theme_lucent_get_pre_scss($theme) {
     $scss = '';
-    $configurable = [
-        'brandcolor' => ['primary'],
-        'secondarycolor' => ['secondary'],
-        'successcolor' => ['success'],
+
+    // Color preset mappings.
+    $presets = [
+        'indigo' => ['primary' => '#6366f1', 'secondary' => '#64748b', 'success' => '#10b981'],
+        'blue'   => ['primary' => '#3b82f6', 'secondary' => '#6b7280', 'success' => '#06b6d4'],
+        'emerald' => ['primary' => '#10b981', 'secondary' => '#64748b', 'success' => '#059669'],
+        'rose'   => ['primary' => '#f43f5e', 'secondary' => '#71717a', 'success' => '#10b981'],
+        'amber'  => ['primary' => '#f59e0b', 'secondary' => '#78716c', 'success' => '#84cc16'],
+        'violet' => ['primary' => '#8b5cf6', 'secondary' => '#6b7280', 'success' => '#10b981'],
     ];
 
-    foreach ($configurable as $configkey => $targets) {
-        $value = isset($theme->settings->{$configkey}) ? $theme->settings->{$configkey} : null;
-        if (empty($value)) {
-            continue;
+    $colorpreset = !empty($theme->settings->colorpreset) ? $theme->settings->colorpreset : 'indigo';
+
+    if ($colorpreset !== 'custom' && isset($presets[$colorpreset])) {
+        // Apply preset colors — overrides any color picker values.
+        foreach ($presets[$colorpreset] as $variable => $color) {
+            $scss .= '$' . $variable . ': ' . $color . ";\n";
         }
-        foreach ($targets as $target) {
-            $scss .= '$' . $target . ': ' . $value . ";\n";
+    } else {
+        // Custom mode — use the color picker values.
+        $configurable = [
+            'brandcolor' => ['primary'],
+            'secondarycolor' => ['secondary'],
+            'successcolor' => ['success'],
+        ];
+
+        foreach ($configurable as $configkey => $targets) {
+            $value = isset($theme->settings->{$configkey}) ? $theme->settings->{$configkey} : null;
+            if (empty($value)) {
+                continue;
+            }
+            foreach ($targets as $target) {
+                $scss .= '$' . $target . ': ' . $value . ";\n";
+            }
         }
     }
 
