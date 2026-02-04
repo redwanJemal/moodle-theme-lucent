@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Lucent theme settings.
+ * Lucent theme settings — premium theme configuration panel.
  *
  * @package    theme_lucent
  * @copyright  2025 Lucent Theme
@@ -28,7 +28,9 @@ if ($ADMIN->fulltree) {
 
     $settings = new theme_boost_admin_settingspage_tabs('themesettinglucent', get_string('configtitle', 'theme_lucent'));
 
-    // ── General Tab ──────────────────────────────────────────
+    // ══════════════════════════════════════════════════════════════
+    // ── GENERAL TAB ─────────────────────────────────────────────
+    // ══════════════════════════════════════════════════════════════
     $page = new admin_settingpage('theme_lucent_general', get_string('generalsettings', 'theme_lucent'));
 
     // Brand colour.
@@ -55,9 +57,46 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
+    // Custom font selection.
+    $name = 'theme_lucent/fontfamily';
+    $title = get_string('fontfamily', 'theme_lucent');
+    $description = get_string('fontfamily_desc', 'theme_lucent');
+    $choices = [
+        'inter' => 'Inter (Default)',
+        'poppins' => 'Poppins',
+        'dm-sans' => 'DM Sans',
+        'nunito' => 'Nunito',
+        'plus-jakarta' => 'Plus Jakarta Sans',
+        'outfit' => 'Outfit',
+        'figtree' => 'Figtree',
+        'system' => 'System Default',
+    ];
+    $setting = new admin_setting_configselect($name, $title, $description, 'inter', $choices);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // Heading font selection.
+    $name = 'theme_lucent/headingfont';
+    $title = get_string('headingfont', 'theme_lucent');
+    $description = get_string('headingfont_desc', 'theme_lucent');
+    $choices = [
+        'same' => 'Same as body font',
+        'inter' => 'Inter',
+        'poppins' => 'Poppins',
+        'dm-sans' => 'DM Sans',
+        'plus-jakarta' => 'Plus Jakarta Sans',
+        'outfit' => 'Outfit',
+        'cabinet-grotesk' => 'Cabinet Grotesk',
+    ];
+    $setting = new admin_setting_configselect($name, $title, $description, 'same', $choices);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
     $settings->add($page);
 
-    // ── Appearance Tab ───────────────────────────────────────
+    // ══════════════════════════════════════════════════════════════
+    // ── APPEARANCE TAB ──────────────────────────────────────────
+    // ══════════════════════════════════════════════════════════════
     $page = new admin_settingpage('theme_lucent_appearance', get_string('appearance', 'theme_lucent'));
 
     // Logo.
@@ -85,6 +124,32 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
+    // Header style.
+    $name = 'theme_lucent/headerstyle';
+    $title = get_string('headerstyle', 'theme_lucent');
+    $description = get_string('headerstyle_desc', 'theme_lucent');
+    $choices = [
+        'glass' => get_string('headerstyle_glass', 'theme_lucent'),
+        'solid' => get_string('headerstyle_solid', 'theme_lucent'),
+        'transparent' => get_string('headerstyle_transparent', 'theme_lucent'),
+    ];
+    $setting = new admin_setting_configselect($name, $title, $description, 'glass', $choices);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // Course card style.
+    $name = 'theme_lucent/coursecardstyle';
+    $title = get_string('coursecardstyle', 'theme_lucent');
+    $description = get_string('coursecardstyle_desc', 'theme_lucent');
+    $choices = [
+        'rounded' => get_string('coursecardstyle_rounded', 'theme_lucent'),
+        'sharp' => get_string('coursecardstyle_sharp', 'theme_lucent'),
+        'gradient' => get_string('coursecardstyle_gradient', 'theme_lucent'),
+    ];
+    $setting = new admin_setting_configselect($name, $title, $description, 'rounded', $choices);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
     // Dark mode toggle.
     $name = 'theme_lucent/darkmode';
     $title = get_string('darkmode', 'theme_lucent');
@@ -94,7 +159,9 @@ if ($ADMIN->fulltree) {
 
     $settings->add($page);
 
-    // ── Login Tab ────────────────────────────────────────────
+    // ══════════════════════════════════════════════════════════════
+    // ── LOGIN TAB ───────────────────────────────────────────────
+    // ══════════════════════════════════════════════════════════════
     $page = new admin_settingpage('theme_lucent_login', get_string('loginsettings', 'theme_lucent'));
 
     // Login background.
@@ -131,8 +198,39 @@ if ($ADMIN->fulltree) {
 
     $settings->add($page);
 
-    // ── Footer Tab ───────────────────────────────────────────
+    // ══════════════════════════════════════════════════════════════
+    // ── MOBILE TAB ──────────────────────────────────────────────
+    // ══════════════════════════════════════════════════════════════
+    $page = new admin_settingpage('theme_lucent_mobile', get_string('mobilesettings', 'theme_lucent'));
+
+    // Mobile bottom nav toggle.
+    $name = 'theme_lucent/mobilebottomnav';
+    $title = get_string('mobilebottomnav', 'theme_lucent');
+    $description = get_string('mobilebottomnav_desc', 'theme_lucent');
+    $setting = new admin_setting_configcheckbox($name, $title, $description, 1);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $settings->add($page);
+
+    // ══════════════════════════════════════════════════════════════
+    // ── FOOTER TAB ──────────────────────────────────────────────
+    // ══════════════════════════════════════════════════════════════
     $page = new admin_settingpage('theme_lucent_footer', get_string('footersettings', 'theme_lucent'));
+
+    // Footer columns.
+    $name = 'theme_lucent/footercolumns';
+    $title = get_string('footercolumns', 'theme_lucent');
+    $description = get_string('footercolumns_desc', 'theme_lucent');
+    $choices = [
+        '1' => '1 column',
+        '2' => '2 columns',
+        '3' => '3 columns',
+        '4' => '4 columns',
+    ];
+    $setting = new admin_setting_configselect($name, $title, $description, '4', $choices);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
 
     // Footer text.
     $name = 'theme_lucent/footertext';
@@ -143,7 +241,51 @@ if ($ADMIN->fulltree) {
 
     $settings->add($page);
 
-    // ── Advanced Tab ─────────────────────────────────────────
+    // ══════════════════════════════════════════════════════════════
+    // ── SOCIAL MEDIA TAB ────────────────────────────────────────
+    // ══════════════════════════════════════════════════════════════
+    $page = new admin_settingpage('theme_lucent_social', get_string('socialsettings', 'theme_lucent'));
+
+    // Facebook.
+    $name = 'theme_lucent/facebook';
+    $title = get_string('facebook', 'theme_lucent');
+    $description = get_string('facebook_desc', 'theme_lucent');
+    $setting = new admin_setting_configtext($name, $title, $description, '', PARAM_URL);
+    $page->add($setting);
+
+    // Twitter / X.
+    $name = 'theme_lucent/twitter';
+    $title = get_string('twitter', 'theme_lucent');
+    $description = get_string('twitter_desc', 'theme_lucent');
+    $setting = new admin_setting_configtext($name, $title, $description, '', PARAM_URL);
+    $page->add($setting);
+
+    // Instagram.
+    $name = 'theme_lucent/instagram';
+    $title = get_string('instagram', 'theme_lucent');
+    $description = get_string('instagram_desc', 'theme_lucent');
+    $setting = new admin_setting_configtext($name, $title, $description, '', PARAM_URL);
+    $page->add($setting);
+
+    // LinkedIn.
+    $name = 'theme_lucent/linkedin';
+    $title = get_string('linkedin', 'theme_lucent');
+    $description = get_string('linkedin_desc', 'theme_lucent');
+    $setting = new admin_setting_configtext($name, $title, $description, '', PARAM_URL);
+    $page->add($setting);
+
+    // YouTube.
+    $name = 'theme_lucent/youtube';
+    $title = get_string('youtube', 'theme_lucent');
+    $description = get_string('youtube_desc', 'theme_lucent');
+    $setting = new admin_setting_configtext($name, $title, $description, '', PARAM_URL);
+    $page->add($setting);
+
+    $settings->add($page);
+
+    // ══════════════════════════════════════════════════════════════
+    // ── ADVANCED TAB ────────────────────────────────────────────
+    // ══════════════════════════════════════════════════════════════
     $page = new admin_settingpage('theme_lucent_advanced', get_string('advancedsettings', 'theme_lucent'));
 
     // Custom SCSS.
@@ -151,6 +293,20 @@ if ($ADMIN->fulltree) {
     $title = get_string('customscss', 'theme_lucent');
     $description = get_string('customscss_desc', 'theme_lucent');
     $setting = new admin_setting_scsscode($name, $title, $description, '', PARAM_RAW);
+    $page->add($setting);
+
+    // Custom CSS injection (raw CSS, not SCSS).
+    $name = 'theme_lucent/customcss';
+    $title = get_string('customcss', 'theme_lucent');
+    $description = get_string('customcss_desc', 'theme_lucent');
+    $setting = new admin_setting_configtextarea($name, $title, $description, '');
+    $page->add($setting);
+
+    // Google Analytics ID.
+    $name = 'theme_lucent/googleanalytics';
+    $title = get_string('googleanalytics', 'theme_lucent');
+    $description = get_string('googleanalytics_desc', 'theme_lucent');
+    $setting = new admin_setting_configtext($name, $title, $description, '');
     $page->add($setting);
 
     // Background image.

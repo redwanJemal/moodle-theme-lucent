@@ -1,0 +1,149 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_lucent/primary-drawer-mobile
+
+    Lucent premium mobile primary drawer — app-like navigation with smooth animations.
+
+    Example context (json):
+    {
+        "output": {
+            "should_display_navbar_logo": true,
+            "get_compact_logo_url": "http://placekitten.com/50/50"
+        },
+        "mobileprimarynav": [
+            {
+                "text": "Dashboard",
+                "url": "/my",
+                "isactive": "true"
+            },
+            {
+                "text": "Site home",
+                "url": "/",
+                "isactive": "false"
+            },
+            {
+                "text": "My courses",
+                "url": "/course",
+                "isactive": "false"
+            }
+        ]
+    }
+}}
+
+{{< theme_boost/drawer }}
+    {{$id}}theme_boost-drawers-primary{{/id}}
+    {{$drawerclasses}}drawer drawer-left drawer-primary lucent-mobile-drawer{{/drawerclasses}}
+    {{$drawercloseonresize}}1{{/drawercloseonresize}}
+    {{$drawerheading}}
+        <a
+            href="{{{ config.homeurl }}}"
+            title="{{{ sitename }}}"
+            data-region="site-home-link"
+            class="aabtn text-reset d-flex align-items-center py-1 h-100 lucent-drawer-brand"
+        >
+            {{# output.should_display_navbar_logo }}
+                <img src="{{output.get_compact_logo_url}}" class="lucent-drawer-logo py-1 h-100" alt="{{sitename}}">
+            {{/ output.should_display_navbar_logo }}
+            {{^ output.should_display_navbar_logo }}
+                <span class="lucent-drawer-sitename" title="{{{ sitename }}}">{{{ sitename }}}</span>
+            {{/ output.should_display_navbar_logo }}
+        </a>
+    {{/drawerheading}}
+    {{$drawercontent}}
+        <div class="lucent-mobile-nav">
+            {{! ── Quick Actions ── }}
+            <div class="lucent-quick-actions">
+                <a href="{{{ config.wwwroot }}}/my/" class="lucent-quick-action">
+                    <div class="lucent-quick-action-icon">
+                        <i class="fa fa-tachometer"></i>
+                    </div>
+                    <span>Dashboard</span>
+                </a>
+                <a href="{{{ config.wwwroot }}}/calendar/view.php" class="lucent-quick-action">
+                    <div class="lucent-quick-action-icon">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                    <span>Calendar</span>
+                </a>
+                <a href="{{{ config.wwwroot }}}/my/courses.php" class="lucent-quick-action">
+                    <div class="lucent-quick-action-icon">
+                        <i class="fa fa-graduation-cap"></i>
+                    </div>
+                    <span>Courses</span>
+                </a>
+                <a href="{{{ config.wwwroot }}}/message/index.php" class="lucent-quick-action">
+                    <div class="lucent-quick-action-icon">
+                        <i class="fa fa-envelope"></i>
+                    </div>
+                    <span>Messages</span>
+                </a>
+            </div>
+
+            {{! ── Divider ── }}
+            <div class="lucent-nav-divider">
+                <span>Navigation</span>
+            </div>
+
+            {{! ── Primary Navigation Items ── }}
+            <div class="list-group lucent-nav-list">
+                {{#mobileprimarynav}}
+                    {{#haschildren}}
+                    <a id="drop-down-{{sort}}" href="#"
+                       class="list-group-item list-group-item-action lucent-nav-item lucent-nav-parent icons-collapse-expand {{^isopen}}collapsed {{/isopen}}d-flex align-items-center"
+                       data-toggle="collapse"
+                       data-target="#drop-down-menu-{{sort}}"
+                       aria-expanded="{{#isopen}}true{{/isopen}}{{^isopen}}false{{/isopen}}"
+                       aria-controls="drop-down-menu-{{sort}}">
+                        <span class="lucent-nav-text">{{{text}}}</span>
+                        <span class="ms-auto lucent-nav-chevron">
+                            <span class="expanded-icon icon-no-margin">
+                                {{#pix}} t/expanded, core {{/pix}}
+                                <span class="sr-only">{{#str}} collapse, core {{/str}}</span>
+                            </span>
+                            <span class="collapsed-icon icon-no-margin">
+                                {{#pix}} t/collapsed, core {{/pix}}
+                                <span class="sr-only">{{#str}} expand, core {{/str}}</span>
+                            </span>
+                        </span>
+                    </a>
+                    <div class="collapse {{#isopen}}show {{/isopen}}list-group-item p-0 border-0 lucent-nav-children" role="menu" id="drop-down-menu-{{sort}}" aria-labelledby="drop-down-{{sort}}">
+                        {{#children}}
+                            {{^divider}}
+                                <a href="{{{url}}}" class="lucent-nav-child {{#isactive}}active{{/isactive}}">
+                                    <span class="lucent-nav-child-indicator"></span>
+                                    {{{text}}}
+                                </a>
+                            {{/divider}}
+                        {{/children}}
+                    </div>
+                    {{/haschildren}}
+
+                    {{^haschildren}}
+                    <a href="{{{url}}}" class="list-group-item list-group-item-action lucent-nav-item {{#isactive}}active{{/isactive}} {{#classes}}{{.}} {{/classes}}" {{#isactive}}aria-current="true"{{/isactive}}>
+                        <span class="lucent-nav-text">{{{text}}}</span>
+                        {{#isactive}}
+                            <span class="lucent-active-dot"></span>
+                        {{/isactive}}
+                    </a>
+                    {{/haschildren}}
+                {{/mobileprimarynav}}
+            </div>
+        </div>
+    {{/drawercontent}}
+    {{$drawerstate}}show-drawer-primary{{/drawerstate}}
+{{/ theme_boost/drawer}}

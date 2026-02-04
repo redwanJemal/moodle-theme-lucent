@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Lucent theme config.
+ * Lucent theme config — premium mobile-first Moodle theme.
  *
  * @package    theme_lucent
  * @copyright  2025 Lucent Theme
