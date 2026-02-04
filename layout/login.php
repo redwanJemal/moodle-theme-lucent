@@ -104,18 +104,32 @@ echo $OUTPUT->doctype(); ?>
                 </a>
             </div>
 
+            <?php
+            // Detect if this is signup or login
+            $issignup = strpos($PAGE->pagetype, 'login-signup') !== false;
+            ?>
+
             <div class="lucent-auth-form-header">
-                <h2><?php echo get_config('theme_lucent', 'loginheading') ?: get_string('loginheading_default', 'theme_lucent'); ?></h2>
-                <p><?php echo get_config('theme_lucent', 'loginsubheading') ?: get_string('loginsubheading_default', 'theme_lucent'); ?></p>
+                <?php if ($issignup): ?>
+                    <h2>Create Account</h2>
+                    <p>Sign up to start your learning journey</p>
+                <?php else: ?>
+                    <h2><?php echo get_config('theme_lucent', 'loginheading') ?: get_string('loginheading_default', 'theme_lucent'); ?></h2>
+                    <p><?php echo get_config('theme_lucent', 'loginsubheading') ?: get_string('loginsubheading_default', 'theme_lucent'); ?></p>
+                <?php endif; ?>
             </div>
 
-            <div class="lucent-auth-form-body">
+            <div class="lucent-auth-form-body <?php echo $issignup ? 'lucent-signup-form' : 'lucent-login-form'; ?>">
                 <?php echo $OUTPUT->main_content(); ?>
             </div>
 
             <div class="lucent-auth-form-footer">
-                <?php if (!empty($CFG->registerauth)): ?>
-                <p>Don't have an account? <a href="<?php echo new moodle_url('/login/signup.php'); ?>">Create one</a></p>
+                <?php if ($issignup): ?>
+                    <p>Already have an account? <a href="<?php echo new moodle_url('/login/index.php'); ?>">Sign in</a></p>
+                <?php else: ?>
+                    <?php if (!empty($CFG->registerauth)): ?>
+                    <p>Don't have an account? <a href="<?php echo new moodle_url('/login/signup.php'); ?>">Create one</a></p>
+                    <?php endif; ?>
                 <?php endif; ?>
                 <a href="<?php echo $CFG->wwwroot; ?>" class="lucent-auth-back-link">← Back to homepage</a>
             </div>

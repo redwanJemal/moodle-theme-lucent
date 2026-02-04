@@ -25,17 +25,21 @@
   width: 100%;
 }
 
-// ── Left Brand Panel ──
+// ── Left Brand Panel — Sticky ──
 
 .lucent-auth-brand {
   display: none;
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
   width: 50%;
   background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 40%, #312e81 70%, #4338ca 100%);
   overflow: hidden;
   padding: 3rem;
   flex-direction: column;
   justify-content: center;
+  z-index: 1;
 }
 
 .lucent-auth-brand-bg {
@@ -445,6 +449,57 @@
   }
 }
 
+// ── Login page: hide duplicate "Create new account" section ──
+// (We have "Don't have an account? Create one" in the footer already)
+
+.lucent-login-form {
+  // Hide "Is this your first time here?" + "Create new account" button
+  .login-instructions {
+    display: none !important;
+  }
+  .login-signup {
+    display: none !important;
+  }
+  // Hide the divider before the signup section
+  .login-form-forgotpassword + .login-divider,
+  #guestlogin + .login-divider + .login-instructions,
+  .login-divider:has(+ .login-instructions) {
+    display: none !important;
+  }
+}
+
+// ── Signup form: compact inputs ──
+
+.lucent-signup-form {
+  .fitem {
+    margin-bottom: 0.75rem !important;
+  }
+
+  .form-control {
+    padding: 0.625rem 0.875rem !important;
+    font-size: 0.875rem !important;
+    min-height: 42px !important;
+  }
+
+  label {
+    font-size: 0.8125rem !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  .form-label-fitem {
+    margin-bottom: 0.25rem !important;
+  }
+
+  // Password policy text — compact
+  .form-passwordunmask-wrapper ~ .form-text,
+  .fdescription {
+    font-size: 0.75rem !important;
+    color: var(--lucent-text-light) !important;
+    line-height: 1.4;
+    margin-top: 0.25rem;
+  }
+}
+
 // ── Desktop — show split layout ──
 
 @media (min-width: 1024px) {
@@ -454,6 +509,7 @@
 
   .lucent-auth-form-panel {
     width: 50%;
+    margin-left: 50%; // Push right since left panel is fixed
   }
 
   .lucent-auth-mobile-brand {
