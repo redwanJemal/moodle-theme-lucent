@@ -274,16 +274,92 @@ if (($showcategories === false || $showcategories) && !empty($categories)):
 <!-- ══════════════════════════════════════════════════ -->
 <!-- FOOTER -->
 <!-- ══════════════════════════════════════════════════ -->
+<?php
+$footerdesc = get_config('theme_lucent', 'footerdesc') ?: 'Empowering learners worldwide with quality education.';
+$col1title = get_config('theme_lucent', 'footercol1title') ?: 'Quick Links';
+$col1links = get_config('theme_lucent', 'footercol1');
+$col2title = get_config('theme_lucent', 'footercol2title') ?: 'Support';
+$col2links = get_config('theme_lucent', 'footercol2');
+$copyright = get_config('theme_lucent', 'copyright');
+
+// Social links
+$socials = [];
+foreach (['facebook', 'twitter', 'instagram', 'linkedin', 'youtube'] as $soc) {
+    $url = get_config('theme_lucent', 'social' . $soc);
+    if (!empty($url)) {
+        $socials[$soc] = $url;
+    }
+}
+
+// Parse pipe-separated links
+function lucent_parse_links($raw) {
+    if (empty($raw)) return [];
+    $lines = explode("\n", trim($raw));
+    $links = [];
+    foreach ($lines as $line) {
+        $parts = explode('|', trim($line), 2);
+        if (count($parts) === 2) {
+            $links[] = ['text' => trim($parts[0]), 'url' => trim($parts[1])];
+        }
+    }
+    return $links;
+}
+$col1 = lucent_parse_links($col1links);
+$col2 = lucent_parse_links($col2links);
+?>
 <footer class="lucent-footer">
-    <div class="lucent-container">
-        <div class="lucent-footer-content">
-            <div class="lucent-footer-brand">
-                <strong><?php echo format_string($SITE->fullname); ?></strong>
-                <p>Empowering learners worldwide with quality education.</p>
+    <div class="lucent-footer-main">
+        <div class="lucent-container">
+            <div class="lucent-fp-footer-grid">
+                <div class="lucent-fp-footer-brand">
+                    <h5 class="lucent-footer-heading"><?php echo format_string($SITE->shortname); ?></h5>
+                    <p class="lucent-footer-desc"><?php echo $footerdesc; ?></p>
+                    <?php if (!empty($socials)): ?>
+                    <div class="lucent-social-links">
+                        <?php foreach ($socials as $platform => $url): ?>
+                        <a href="<?php echo $url; ?>" class="lucent-social-link" target="_blank" rel="noopener" aria-label="<?php echo ucfirst($platform); ?>">
+                            <i class="fa fa-<?php echo $platform === 'youtube' ? 'youtube-play' : $platform; ?>"></i>
+                        </a>
+                        <?php endforeach; ?>
+                    </div>
+                    <?php endif; ?>
+                </div>
+                <?php if (!empty($col1)): ?>
+                <div>
+                    <h6 class="lucent-footer-heading-sm"><?php echo $col1title; ?></h6>
+                    <ul class="lucent-footer-links">
+                        <?php foreach ($col1 as $link): ?>
+                        <li><a href="<?php echo $CFG->wwwroot . $link['url']; ?>"><?php echo $link['text']; ?></a></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+                <?php endif; ?>
+                <?php if (!empty($col2)): ?>
+                <div>
+                    <h6 class="lucent-footer-heading-sm"><?php echo $col2title; ?></h6>
+                    <ul class="lucent-footer-links">
+                        <?php foreach ($col2 as $link): ?>
+                        <li><a href="<?php echo $CFG->wwwroot . $link['url']; ?>"><?php echo $link['text']; ?></a></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+                <?php endif; ?>
+                <div>
+                    <h6 class="lucent-footer-heading-sm">Account</h6>
+                    <div class="lucent-footer-login-info">
+                        <?php echo $OUTPUT->login_info(); ?>
+                    </div>
+                </div>
             </div>
-            <div class="lucent-footer-bottom">
-                <span>© <?php echo date('Y'); ?> <?php echo format_string($SITE->shortname); ?>. All rights reserved.</span>
-                <?php echo $OUTPUT->login_info(); ?>
+        </div>
+    </div>
+    <div class="lucent-footer-bottom">
+        <div class="lucent-container" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <div class="lucent-footer-copyright">
+                <?php echo $copyright ?: '&copy; ' . date('Y') . ' ' . format_string($SITE->shortname) . '. All rights reserved.'; ?>
+            </div>
+            <div class="lucent-footer-theme-credit">
+                Designed with <span class="lucent-heart">&hearts;</span> by Lucent Theme
             </div>
         </div>
     </div>
