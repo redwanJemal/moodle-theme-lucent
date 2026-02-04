@@ -757,21 +757,80 @@ body.pagelayout-mycourses {
   }
 }
 
-// ── COURSE LISTING / CATEGORY PAGE ───────────────────────────
+// ── FOOTER — Full width breakout ─────────────────────────────
+
+// Make footer full-width regardless of container constraints
+#page-footer.lucent-footer,
+footer.lucent-footer {
+  width: 100vw !important;
+  max-width: none !important;
+  margin-left: calc(-50vw + 50%) !important;
+  margin-right: calc(-50vw + 50%) !important;
+  position: relative;
+  margin-bottom: 0 !important;
+}
+
+// Kill any gap after footer
+#page.drawers {
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+// Hide debug footer gap
+.footer-content-debugging:empty {
+  display: none;
+}
+
+// ── COURSE LISTING / CATEGORY PAGE — Udemy-style ────────────
 
 body.pagelayout-coursecategory {
-  // Page header
+  // Full-width content
+  .main-inner {
+    max-width: 1200px !important;
+  }
+
+  // Page header — make it a nice banner
   #page-header {
-    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 40%, #312e81 100%);
+    margin: -1rem calc(-50vw + 50%) 2rem;
+    padding: 2.5rem 2rem 2rem;
+    width: 100vw;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: -30%;
+      right: -5%;
+      width: 350px;
+      height: 350px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
 
     .page-header-headings h1,
-    .page-header-headings .h2 {
+    .page-header-headings .h2,
+    .page-header-headings h2 {
+      color: #ffffff !important;
       font-weight: 800;
       letter-spacing: -0.03em;
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .breadcrumb {
+      max-width: 1200px;
+      margin: 0 auto 0.5rem;
+      position: relative;
+      z-index: 1;
+      .breadcrumb-item { color: rgba(255,255,255,0.5); a { color: rgba(255,255,255,0.65); &:hover { color: #fff; } } &.active { color: rgba(255,255,255,0.9); } + .breadcrumb-item::before { color: rgba(255,255,255,0.3); } }
     }
   }
 
-  // Category tree
+  // Category filter bar — horizontal pills
   .course_category_tree {
     .category {
       .categoryname {
@@ -786,7 +845,6 @@ body.pagelayout-coursecategory {
       }
     }
 
-    // Expand/collapse links
     .collapseexpand {
       font-size: 0.875rem;
       font-weight: 600;
@@ -794,66 +852,174 @@ body.pagelayout-coursecategory {
     }
   }
 
-  // Course boxes in listing
+  // Course boxes — Udemy-style cards
+  .frontpage-course-list-all,
+  .course-listing .courses {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+
   .coursebox {
     border: 1px solid var(--lucent-border) !important;
-    border-radius: var(--lucent-radius-lg) !important;
+    border-radius: var(--lucent-radius-xl) !important;
     background: var(--lucent-surface-elevated) !important;
-    padding: 1.25rem !important;
-    margin-bottom: 1rem;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 0 !important;
+    margin-bottom: 0 !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: var(--lucent-shadow-xs);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 
     &:hover {
-      box-shadow: var(--lucent-shadow-md);
-      border-color: rgba(99, 102, 241, 0.2) !important;
-      transform: translateY(-2px);
+      box-shadow: var(--lucent-shadow-lg);
+      border-color: transparent !important;
+      transform: translateY(-4px);
     }
 
-    .info .coursename a {
-      font-weight: 700;
-      font-size: 1.0625rem;
-      color: var(--lucent-text);
-      text-decoration: none;
+    .info {
+      order: 2;
+      padding: 1rem 1.25rem 0.5rem;
 
-      &:hover { color: var(--lucent-primary); }
+      .coursename {
+        margin: 0;
+
+        a {
+          font-weight: 700;
+          font-size: 1rem;
+          color: var(--lucent-text);
+          text-decoration: none;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          line-height: 1.35;
+
+          &:hover { color: var(--lucent-primary); }
+        }
+      }
+
+      .moreinfo { display: none; }
     }
 
     .content {
-      margin-top: 0.75rem;
+      order: 1;
+      margin: 0;
+      padding: 0;
 
-      .courseimage img {
-        border-radius: var(--lucent-radius);
-        width: 120px;
-        height: 80px;
-        object-fit: cover;
+      .d-flex {
+        flex-direction: column !important;
+      }
+
+      .courseimage {
+        width: 100% !important;
+        flex: none !important;
+
+        img {
+          width: 100% !important;
+          height: 180px !important;
+          object-fit: cover;
+          display: block;
+          border-radius: 0;
+        }
+      }
+
+      .flex-grow-1 {
+        padding: 0 1.25rem 1rem;
       }
 
       .summary {
-        font-size: 0.875rem;
+        font-size: 0.8125rem;
         color: var(--lucent-text-muted);
         line-height: 1.5;
+        margin-top: 0.5rem;
+
+        .no-overflow {
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
       }
 
       .teachers {
-        font-size: 0.8125rem;
+        font-size: 0.75rem;
         color: var(--lucent-text-light);
-        margin-top: 0.5rem;
-        padding: 0;
+        margin-top: 0.75rem;
+        padding: 0.75rem 0 0;
+        border-top: 1px solid var(--lucent-border-light);
         list-style: none;
 
+        .font-weight-bold { font-weight: 600; color: var(--lucent-text-muted); }
         a { color: var(--lucent-primary); text-decoration: none; &:hover { text-decoration: underline; } }
       }
     }
+
+    // "All courses" button at the bottom
+    &:last-child .paging-morelink {
+      order: 3;
+    }
   }
 
-  // Search bar styling
+  // All courses link
+  .paging-morelink {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 1rem 0;
+
+    .btn {
+      background: var(--lucent-primary) !important;
+      color: white !important;
+      border: none !important;
+      border-radius: var(--lucent-radius) !important;
+      font-weight: 600;
+      padding: 0.75rem 2rem !important;
+    }
+  }
+
+  // Search bar
   .simplesearchform .btn-submit,
   .coursesearchbox .btn {
     background: var(--lucent-primary) !important;
     border-color: var(--lucent-primary) !important;
     color: white !important;
     border-radius: 0 var(--lucent-radius) var(--lucent-radius) 0 !important;
+  }
+
+  // Category dropdown
+  .custom-select,
+  select.custom-select {
+    border-radius: var(--lucent-radius) !important;
+    border: 1.5px solid var(--lucent-border) !important;
+    padding: 0.625rem 1rem !important;
+    font-size: 0.9375rem !important;
+    font-weight: 500;
+    min-height: 44px;
+    background-color: var(--lucent-surface-elevated);
+  }
+}
+
+// ── Enrollment page styling ──
+
+#page-enrol-index {
+  .generalbox {
+    border: 1px solid var(--lucent-border);
+    border-radius: var(--lucent-radius-lg);
+    padding: 1.5rem;
+    background: var(--lucent-surface-elevated);
+    box-shadow: var(--lucent-shadow-xs);
+  }
+
+  .coursebox {
+    border: 1px solid var(--lucent-border) !important;
+    border-radius: var(--lucent-radius-lg) !important;
+    padding: 1.25rem !important;
+    background: var(--lucent-surface-elevated) !important;
+
+    .courseimage img {
+      border-radius: var(--lucent-radius);
+    }
   }
 }
 
