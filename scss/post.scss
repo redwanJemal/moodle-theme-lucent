@@ -3,117 +3,424 @@
 // Final overrides, login page, dashboard enhancements
 // ══════════════════════════════════════════════════════════════
 
-// ── LOGIN PAGE — Premium split layout ────────────────────────
+// ── LOGIN / AUTH PAGES — Premium split-screen ────────────────
 
-body#page-login-index {
-  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+// Kill all default Moodle chrome on login
+.lucent-login-page {
+  background: #f8fafc !important;
+  padding: 0 !important;
+  margin: 0 !important;
+
+  .navbar, #page-header, #page-footer, .breadcrumb,
+  #page-wrapper, .drawers, #topofscroll, .lucent-bottom-nav {
+    display: none !important;
+  }
+}
+
+// ── Auth Layout Container ──
+
+.lucent-auth {
+  display: flex;
   min-height: 100vh;
+  width: 100%;
+}
 
-  #page-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 2rem;
+// ── Left Brand Panel ──
+
+.lucent-auth-brand {
+  display: none;
+  position: relative;
+  width: 50%;
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 40%, #312e81 70%, #4338ca 100%);
+  overflow: hidden;
+  padding: 3rem;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.lucent-auth-brand-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.lucent-auth-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.lucent-auth-orb-1 {
+  top: -15%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.25) 0%, transparent 70%);
+}
+
+.lucent-auth-orb-2 {
+  bottom: -20%;
+  left: -15%;
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.2) 0%, transparent 70%);
+}
+
+.lucent-auth-orb-3 {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 60%);
+}
+
+.lucent-auth-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.lucent-auth-brand-content {
+  position: relative;
+  z-index: 1;
+  max-width: 480px;
+}
+
+.lucent-auth-logo-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none !important;
+  margin-bottom: 3rem;
+}
+
+.lucent-auth-logo {
+  height: 40px;
+  width: auto;
+}
+
+.lucent-auth-logo-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+}
+
+.lucent-auth-headline {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 3rem;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin: 0 0 1.25rem 0;
+}
+
+.lucent-auth-tagline {
+  font-size: 1.125rem;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.6;
+  margin: 0 0 2.5rem 0;
+  max-width: 380px;
+}
+
+.lucent-auth-stats-row {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.lucent-auth-stat-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255,255,255,0.7);
+  font-size: 0.9375rem;
+  font-weight: 500;
+
+  svg {
+    opacity: 0.5;
+    flex-shrink: 0;
+  }
+}
+
+.lucent-auth-brand-footer {
+  position: absolute;
+  bottom: 2rem;
+  left: 3rem;
+  color: rgba(255,255,255,0.25);
+  font-size: 0.8125rem;
+}
+
+// ── Right Form Panel ──
+
+.lucent-auth-form-panel {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+  background: #ffffff;
+}
+
+.lucent-auth-form-wrapper {
+  width: 100%;
+  max-width: 400px;
+}
+
+// Mobile brand (only on small screens)
+.lucent-auth-mobile-brand {
+  text-align: center;
+  margin-bottom: 2rem;
+
+  a {
+    text-decoration: none !important;
   }
 
-  #page {
-    background: transparent !important;
-    max-width: none;
-    width: 100%;
+  img {
+    height: 36px;
+    width: auto;
+  }
+}
+
+.lucent-auth-mobile-sitename {
+  font-weight: 800;
+  font-size: 1.25rem;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+// Form header
+.lucent-auth-form-header {
+  margin-bottom: 2rem;
+
+  h2 {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.03em;
+    margin: 0 0 0.5rem 0;
   }
 
-  #page-content {
-    background: transparent;
+  p {
+    color: #94a3b8;
+    font-size: 0.9375rem;
+    margin: 0;
+    font-weight: 400;
   }
+}
 
-  .navbar, #page-footer, .breadcrumb {
+// ── Override Moodle's .loginform ──
+
+.lucent-auth-form-body {
+
+  // Kill Moodle's default login heading (we provide our own)
+  .login-heading {
     display: none !important;
   }
 
-  .login-wrapper,
-  #region-main {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-  }
-
-  .login-container,
   .loginform {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-radius: 1.25rem;
-    padding: 3rem;
-    max-width: 440px;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    max-width: none !important;
+    border: none !important;
+  }
+
+  // Username & Password fields
+  .login-form-username,
+  .login-form-password {
+    margin-bottom: 1.25rem !important;
+
+    label:not(.sr-only) {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: #334155;
+      margin-bottom: 0.375rem;
+      display: block;
+    }
+  }
+
+  .form-control,
+  .form-control-lg {
+    border: 1.5px solid #e2e8f0 !important;
+    border-radius: 10px !important;
+    padding: 0.8125rem 1rem !important;
+    font-size: 0.9375rem !important;
+    background: #f8fafc !important;
+    color: #0f172a !important;
+    transition: all 0.2s ease !important;
+    height: auto !important;
+    min-height: 48px;
     width: 100%;
-    box-shadow:
-      0 25px 50px -12px rgba(0, 0, 0, 0.25),
-      0 0 0 1px rgba(255, 255, 255, 0.1);
-  }
 
-  .login-heading,
-  h2 {
-    font-size: 1.75rem;
-    font-weight: 800;
-    color: #1e293b;
-    text-align: center;
-    margin-bottom: 0.5rem;
-    letter-spacing: -0.03em;
-  }
-
-  .login-sub {
-    text-align: center;
-    color: #64748b;
-    font-size: 0.9375rem;
-    margin-bottom: 2rem;
-  }
-
-  .form-control {
-    border: 1.5px solid #e2e8f0;
-    border-radius: 0.625rem;
-    padding: 0.75rem 1rem;
-    font-size: 0.9375rem;
-    background: #f8fafc;
-    transition: all 0.2s;
+    &::placeholder {
+      color: #94a3b8 !important;
+      font-weight: 400;
+    }
 
     &:focus {
-      border-color: $primary;
-      background: white;
-      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+      border-color: #6366f1 !important;
+      background: #ffffff !important;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1) !important;
+      outline: none !important;
     }
   }
 
-  .login-form-submit,
-  .btn-primary {
-    width: 100%;
-    padding: 0.75rem;
-    font-size: 1rem;
-    font-weight: 700;
-    border-radius: 0.625rem;
-    background: linear-gradient(135deg, $primary, darken($primary, 8%));
-    border: none;
-    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
-    transition: all 0.2s;
+  // Log in button
+  .login-form-submit {
     margin-top: 0.5rem;
+    margin-bottom: 1rem !important;
 
-    &:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.45);
+    .btn,
+    .btn-primary,
+    .btn-lg {
+      width: 100%;
+      padding: 0.8125rem 1.5rem !important;
+      font-size: 0.9375rem !important;
+      font-weight: 700 !important;
+      border-radius: 10px !important;
+      background: linear-gradient(135deg, #6366f1, #4f46e5) !important;
+      border: none !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3) !important;
+      transition: all 0.2s ease !important;
+      cursor: pointer;
+      letter-spacing: -0.01em;
+      min-height: 48px;
+
+      &:hover {
+        transform: translateY(-1px) !important;
+        box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4) !important;
+        background: linear-gradient(135deg, #4f46e5, #4338ca) !important;
+      }
+
+      &:active {
+        transform: translateY(0) !important;
+      }
     }
   }
 
-  // Links
-  .login-form-forgotpassword,
-  .login-signup {
+  // Forgot password
+  .login-form-forgotpassword {
     text-align: center;
-    margin-top: 1.25rem;
+    margin-bottom: 1.25rem !important;
 
     a {
-      color: $primary;
-      font-weight: 600;
+      color: #6366f1;
+      font-weight: 500;
       font-size: 0.875rem;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+        color: #4f46e5;
+      }
+    }
+  }
+
+  // Divider
+  .login-divider {
+    height: 1px;
+    background: #e2e8f0;
+    margin: 1.5rem 0;
+    position: relative;
+  }
+
+  // Guest access section — make it subtle
+  h2.login-heading,
+  .login-heading:not(:first-child) {
+    display: block !important;
+    font-size: 0.8125rem !important;
+    font-weight: 500 !important;
+    color: #94a3b8 !important;
+    text-align: center;
+    letter-spacing: 0 !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  // Guest button — subtle secondary style
+  #guestlogin {
+    text-align: center;
+
+    .btn-secondary {
+      background: transparent !important;
+      border: 1.5px solid #e2e8f0 !important;
+      border-radius: 10px !important;
+      color: #64748b !important;
+      font-size: 0.875rem !important;
+      font-weight: 600 !important;
+      padding: 0.625rem 1.5rem !important;
+      transition: all 0.2s ease !important;
+      min-height: 44px;
+
+      &:hover {
+        border-color: #cbd5e1 !important;
+        background: #f8fafc !important;
+        color: #334155 !important;
+      }
+    }
+  }
+
+  // Cookies notice — hide it or make it tiny
+  .d-flex:last-child {
+    justify-content: center;
+    margin-top: 0.5rem;
+
+    .btn-secondary {
+      background: transparent !important;
+      border: none !important;
+      color: #cbd5e1 !important;
+      font-size: 0.75rem !important;
+      font-weight: 400 !important;
+      padding: 0.25rem 0.5rem !important;
+      min-height: auto !important;
+      min-width: auto !important;
+
+      &:hover {
+        color: #94a3b8 !important;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  // Error messages
+  .loginerrors,
+  .alert {
+    border-radius: 10px !important;
+    font-size: 0.875rem;
+    margin-bottom: 1.25rem;
+  }
+}
+
+// Form footer (signup link + back)
+.lucent-auth-form-footer {
+  margin-top: 2rem;
+  text-align: center;
+
+  p {
+    font-size: 0.875rem;
+    color: #94a3b8;
+    margin: 0 0 1rem 0;
+
+    a {
+      color: #6366f1;
+      font-weight: 600;
       text-decoration: none;
 
       &:hover {
@@ -121,58 +428,128 @@ body#page-login-index {
       }
     }
   }
+}
 
-  // Background decorations
-  &::before {
-    content: '';
-    position: fixed;
-    top: -50%;
-    right: -20%;
-    width: 600px;
-    height: 600px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-  }
+.lucent-auth-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8125rem;
+  color: #cbd5e1 !important;
+  text-decoration: none !important;
+  font-weight: 500;
+  transition: color 0.2s;
 
-  &::after {
-    content: '';
-    position: fixed;
-    bottom: -30%;
-    left: -10%;
-    width: 500px;
-    height: 500px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(168, 85, 247, 0.12) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
+  &:hover {
+    color: #94a3b8 !important;
   }
 }
 
-// Dark mode login
-body#page-login-index.lucent-dark {
-  background: linear-gradient(135deg, #020617 0%, #0f0b2e 50%, #1e1b4b 100%);
+// ── Desktop — show split layout ──
 
-  .login-container,
-  .loginform {
-    background: rgba(15, 23, 42, 0.9);
-    border: 1px solid rgba(99, 102, 241, 0.15);
+@media (min-width: 1024px) {
+  .lucent-auth-brand {
+    display: flex;
   }
 
-  .login-heading, h2 {
-    color: #f1f5f9;
+  .lucent-auth-form-panel {
+    width: 50%;
   }
 
-  .form-control {
-    background: #1e293b;
-    border-color: #334155;
-    color: #f1f5f9;
+  .lucent-auth-mobile-brand {
+    display: none;
+  }
+}
+
+// ── Tablet ──
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .lucent-auth-form-panel {
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+  }
+
+  .lucent-auth-form-wrapper {
+    background: #ffffff;
+    border-radius: 1.25rem;
+    padding: 2.5rem;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+    max-width: 440px;
+  }
+
+  .lucent-auth-mobile-brand {
+    display: block;
+  }
+}
+
+// ── Mobile ──
+
+@media (max-width: 767px) {
+  .lucent-auth-form-panel {
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+    padding: 1.5rem;
+    align-items: flex-start;
+    padding-top: 3rem;
+  }
+
+  .lucent-auth-form-wrapper {
+    background: #ffffff;
+    border-radius: 1.25rem;
+    padding: 2rem 1.5rem;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+  }
+
+  .lucent-auth-mobile-brand {
+    display: block;
+  }
+
+  .lucent-auth-form-header h2 {
+    font-size: 1.5rem;
+  }
+}
+
+// ── Dark Mode Auth ──
+
+.lucent-dark .lucent-auth-form-panel,
+[data-theme="dark"] .lucent-auth-form-panel {
+  background: #0f172a;
+}
+
+.lucent-dark .lucent-auth-form-wrapper,
+[data-theme="dark"] .lucent-auth-form-wrapper {
+  background: #1e293b;
+}
+
+.lucent-dark .lucent-auth-form-header h2,
+[data-theme="dark"] .lucent-auth-form-header h2 {
+  color: #f1f5f9;
+}
+
+.lucent-dark .lucent-auth-form-header p,
+[data-theme="dark"] .lucent-auth-form-header p {
+  color: #64748b;
+}
+
+.lucent-dark .lucent-auth-form-body,
+[data-theme="dark"] .lucent-auth-form-body {
+  .form-control,
+  .form-control-lg {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+    color: #f1f5f9 !important;
+
+    &::placeholder { color: #475569 !important; }
 
     &:focus {
-      background: #0f172a;
-      border-color: $primary;
+      background: #0f172a !important;
+      border-color: #6366f1 !important;
     }
+  }
+}
+
+@media (max-width: 1023px) {
+  .lucent-dark .lucent-auth-form-wrapper,
+  [data-theme="dark"] .lucent-auth-form-wrapper {
+    border: 1px solid rgba(99, 102, 241, 0.15);
   }
 }
 
