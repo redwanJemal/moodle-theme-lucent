@@ -7402,6 +7402,437 @@ body.lucent-dark {
 }
 
 
+// ══════════════════════════════════════════════════════════════
+// UI BUG FIXES — Sidebar/Footer, Grader, Forms, Pagination
+// ══════════════════════════════════════════════════════════════
+
+// ── 1. SIDEBAR / DRAWER OVERLAPPING FOOTER FIX ──────────────
+// Drawers use position:fixed and overlap the footer on scroll.
+// Fix: Give footer a higher z-index so it renders above drawers.
+
+.lucent-footer,
+#page-footer {
+  position: relative;
+  z-index: 1040; // Higher than drawer z-index (1030)
+}
+
+.drawer-left,
+[data-region="right-hand-drawer"] {
+  z-index: 1030;
+}
+
+// Ensure drawers don't cover footer — constrain height
+.drawer,
+.drawer-left,
+[data-region="right-hand-drawer"] {
+  bottom: 0;
+  max-height: 100vh;
+  overflow-y: auto;
+}
+
+// Drawers wrapper — ensure content fills viewport minus navbar
+#page.drawers {
+  position: relative;
+
+  .drawers-wrapper {
+    min-height: calc(100vh - var(--lucent-navbar-height, 60px));
+  }
+}
+
+// ── 2. GRADER / GRADEBOOK PAGE FIX ──────────────────────────
+// Fix duplicate/overlapping tables, misplaced pagination, orphaned dropdown
+
+.path-grade-report-grader,
+#page-grade-report-grader-index {
+
+  // Grade table container — scrollable, clean card
+  .gradeparent {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--lucent-border);
+    border-radius: var(--lucent-radius-lg);
+    background: var(--lucent-surface-elevated);
+    box-shadow: var(--lucent-shadow-xs);
+
+    table.gradereport-grader-table {
+      width: 100%;
+      border-collapse: collapse;
+
+      th, td {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.8125rem;
+        white-space: nowrap;
+        border: 1px solid var(--lucent-border-light);
+        text-align: center;
+      }
+
+      // Sticky first column (student names)
+      th:first-child,
+      td:first-child {
+        position: sticky;
+        left: 0;
+        z-index: 2;
+        background: var(--lucent-surface-elevated);
+        min-width: 180px;
+        text-align: left;
+      }
+
+      // Header styling
+      thead th {
+        background: var(--lucent-surface-hover);
+        font-weight: 700;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        color: var(--lucent-text-muted);
+        position: sticky;
+        top: 0;
+        z-index: 3;
+      }
+
+      thead th:first-child {
+        z-index: 4; // Corner cell needs highest z-index
+      }
+
+      tbody tr {
+        &:nth-child(even) {
+          background: var(--lucent-surface-hover);
+        }
+
+        &:hover td {
+          background: rgba(var(--lucent-primary-rgb), 0.04);
+        }
+      }
+
+      // Average / last row
+      .lastrow td,
+      .avg td {
+        font-weight: 700;
+        background: var(--lucent-surface-hover);
+        border-top: 2px solid var(--lucent-border);
+      }
+    }
+  }
+
+  // "Show X" dropdown — inline clean style
+  .gradereport_grader_perpage,
+  .perpage {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.75rem 0;
+
+    select,
+    .custom-select {
+      border: 1.5px solid var(--lucent-border);
+      border-radius: var(--lucent-radius);
+      padding: 0.375rem 0.75rem;
+      font-size: 0.8125rem;
+      min-height: 36px;
+    }
+  }
+
+  // Initial bar (A-Z filter)
+  .initialbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    margin-bottom: 1rem;
+
+    .page-item {
+      .page-link {
+        min-width: 32px;
+        height: 32px;
+        padding: 0 0.375rem;
+        font-size: 0.75rem;
+        border-radius: var(--lucent-radius);
+        border: 1px solid var(--lucent-border);
+        background: var(--lucent-surface-elevated);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+          border-color: var(--lucent-primary);
+          color: var(--lucent-primary);
+        }
+      }
+
+      &.active .page-link {
+        background: var(--lucent-primary);
+        border-color: var(--lucent-primary);
+        color: white;
+      }
+    }
+  }
+
+  // User avatar in grade table
+  .userpicture {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+  }
+}
+
+// ── 3. COURSE EDIT PAGE — CHECKBOXES & FORM UI ──────────────
+// Fix "Enable" checkboxes overlapping labels, uniform form styling
+
+.path-mod,
+.mform {
+
+  // Fix "Enable" checkbox overlap on date fields
+  .fdate_time_selector,
+  .fdate_selector {
+    display: flex !important;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+
+    .form-check {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      margin: 0;
+
+      input[type="checkbox"] {
+        margin: 0;
+        flex-shrink: 0;
+      }
+    }
+
+    select {
+      min-width: 70px;
+      padding: 0.375rem 0.5rem;
+      font-size: 0.8125rem;
+      border: 1.5px solid var(--lucent-border);
+      border-radius: var(--lucent-radius-sm);
+      min-height: 36px;
+    }
+  }
+
+  // Custom checkbox styling — uniform across all forms
+  input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--lucent-border);
+    border-radius: 4px;
+    background: var(--lucent-surface-elevated);
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+    transition: all 0.15s;
+
+    &:checked {
+      background: var(--lucent-primary);
+      border-color: var(--lucent-primary);
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 2px;
+        left: 5px;
+        width: 5px;
+        height: 9px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+    }
+
+    &:hover {
+      border-color: var(--lucent-primary);
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 3px rgba(var(--lucent-primary-rgb), 0.15);
+      outline: none;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  // Radio buttons — uniform
+  input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--lucent-border);
+    border-radius: 50%;
+    background: var(--lucent-surface-elevated);
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+    transition: all 0.15s;
+
+    &:checked {
+      border-color: var(--lucent-primary);
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--lucent-primary);
+      }
+    }
+
+    &:hover {
+      border-color: var(--lucent-primary);
+    }
+  }
+
+  // Form sections — card style
+  fieldset {
+    border: 1px solid var(--lucent-border);
+    border-radius: var(--lucent-radius-lg);
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    background: var(--lucent-surface-elevated);
+
+    legend {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--lucent-text);
+      padding: 0 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+  }
+
+  // Form groups — clean spacing
+  .form-group,
+  .fitem {
+    margin-bottom: 1rem;
+
+    .col-form-label,
+    label {
+      font-weight: 600;
+      font-size: 0.8125rem;
+      color: var(--lucent-text);
+      margin-bottom: 0.375rem;
+    }
+  }
+
+  // Collapsible sections header
+  .collapsible-actions,
+  .ftoggler {
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    color: var(--lucent-text);
+    padding: 0.75rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &:hover {
+      color: var(--lucent-primary);
+    }
+
+    .collapsed-icon,
+    .expanded-icon {
+      transition: transform 0.2s;
+    }
+  }
+
+  // File upload / drag & drop zones
+  .filemanager,
+  .dndupload-target,
+  .filepicker-filelist {
+    border: 2px dashed var(--lucent-border) !important;
+    border-radius: var(--lucent-radius-lg) !important;
+    background: var(--lucent-surface-hover) !important;
+    padding: 2rem !important;
+    text-align: center;
+    transition: all 0.2s;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover,
+    &.dndupload-over {
+      border-color: var(--lucent-primary) !important;
+      background: rgba(var(--lucent-primary-rgb), 0.04) !important;
+    }
+  }
+
+  // Submit buttons area
+  #fgroup_id_buttonar,
+  .form-submit,
+  [data-groupname="buttonar"] {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--lucent-border);
+    display: flex;
+    gap: 0.75rem;
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--lucent-primary), var(--lucent-primary-dark)) !important;
+      border: none !important;
+      color: white !important;
+      font-weight: 700;
+      padding: 0.625rem 1.5rem;
+      border-radius: var(--lucent-radius);
+    }
+
+    .btn-secondary,
+    .btn-cancel {
+      background: transparent !important;
+      border: 1.5px solid var(--lucent-border) !important;
+      color: var(--lucent-text-muted) !important;
+      font-weight: 600;
+      padding: 0.625rem 1.5rem;
+      border-radius: var(--lucent-radius);
+
+      &:hover {
+        border-color: var(--lucent-text) !important;
+        color: var(--lucent-text) !important;
+      }
+    }
+  }
+}
+
+// ── 4. GLOBAL PAGINATION — Modern pill style ────────────────
+// Enhance existing pagination with pill style (complements existing rules)
+
+.pagination {
+  .page-item {
+    .page-link {
+      border-radius: var(--lucent-radius-full) !important;
+      min-width: 36px;
+      height: 36px;
+      font-weight: 600;
+      font-size: 0.8125rem;
+    }
+  }
+}
+
+// Paging bar — Moodle's classic paging pattern
+.paging_bar,
+.paging-morelink,
+.paginationlinks {
+  .page-item,
+  li {
+    .page-link,
+    a,
+    span {
+      border-radius: var(--lucent-radius-full) !important;
+    }
+  }
+}
+
+
 // ── PRINT STYLES ─────────────────────────────────────────────
 
 @media print {
