@@ -49,11 +49,17 @@ $THEME->scss = function($theme) {
 $THEME->extrascsscallback = 'theme_lucent_get_extra_scss';
 $THEME->prescsscallback = 'theme_lucent_get_pre_scss';
 
-// Layouts — inherit from boost but override login.
+// Layouts — inherit from boost but override login and frontpage.
 $THEME->layouts = [
     'login' => [
         'file' => 'login.php',
         'regions' => [],
         'options' => ['langmenu' => true],
+    ],
+    'frontpage' => [
+        'file' => 'frontpage.php',
+        'regions' => ['side-pre'],
+        'defaultregion' => 'side-pre',
+        'options' => ['nonavbar' => true],
     ],
 ];

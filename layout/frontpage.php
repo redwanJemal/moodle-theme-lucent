@@ -1,0 +1,249 @@
+<?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Lucent frontpage layout — premium hero + course grid.
+ *
+ * @package    theme_lucent
+ * @copyright  2025 Lucent Theme
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+defined('MOODLE_INTERNAL') || die();
+
+require_once($CFG->libdir . '/behat/lib.php');
+require_once($CFG->dirroot . '/course/lib.php');
+
+$bodyattributes = $OUTPUT->body_attributes(['lucent-frontpage']);
+
+global $DB;
+
+// Get courses for display
+$chelper = new coursecat_helper();
+$chelper->set_show_courses(20)->set_courses_display_options([
+    'recursive' => true,
+    'limit' => 12,
+    'viewmoreurl' => new moodle_url('/course/index.php'),
+    'viewmoretext' => new lang_string('fulllistofcourses'),
+]);
+
+$courses = core_course_category::get(0)->get_courses($chelper->get_courses_display_options());
+
+// Count stats
+$totalcourses = $DB->count_records('course') - 1;
+$totalusers = $DB->count_records('user', ['deleted' => 0, 'suspended' => 0]) - 1;
+$totalcategories = $DB->count_records('course_categories');
+
+// Get categories
+$categories = core_course_category::get(0)->get_children();
+
+echo $OUTPUT->doctype();
+?>
+<html <?php echo $OUTPUT->htmlattributes(); ?>>
+<head>
+    <title><?php echo $OUTPUT->page_title(); ?></title>
+    <link rel="shortcut icon" href="<?php echo $OUTPUT->favicon(); ?>" />
+    <?php echo $OUTPUT->standard_head_html(); ?>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body <?php echo $bodyattributes; ?>>
+
+<?php echo $OUTPUT->standard_top_of_body_html(); ?>
+
+<!-- Navbar -->
+<?php echo $OUTPUT->full_header(); ?>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- HERO SECTION -->
+<!-- ══════════════════════════════════════════════════ -->
+<section class="lucent-hero">
+    <div class="lucent-hero-bg"></div>
+    <div class="lucent-hero-content">
+        <div class="lucent-hero-badge">🎓 Online Learning Platform</div>
+        <h1 class="lucent-hero-title">Learn Without<br><span class="lucent-gradient-text">Limits</span></h1>
+        <p class="lucent-hero-subtitle">Discover courses taught by industry experts. Build skills that matter. Transform your career.</p>
+        <div class="lucent-hero-actions">
+            <a href="<?php echo new moodle_url('/course/index.php'); ?>" class="btn lucent-btn-primary">
+                Explore Courses
+            </a>
+            <?php if (!isloggedin() || isguestuser()): ?>
+            <a href="<?php echo new moodle_url('/login/signup.php'); ?>" class="btn lucent-btn-outline">
+                Get Started Free
+            </a>
+            <?php endif; ?>
+        </div>
+        <div class="lucent-hero-stats">
+            <div class="lucent-stat">
+                <span class="lucent-stat-number"><?php echo $totalcourses; ?>+</span>
+                <span class="lucent-stat-label">Courses</span>
+            </div>
+            <div class="lucent-stat-divider"></div>
+            <div class="lucent-stat">
+                <span class="lucent-stat-number"><?php echo $totalusers; ?>+</span>
+                <span class="lucent-stat-label">Students</span>
+            </div>
+            <div class="lucent-stat-divider"></div>
+            <div class="lucent-stat">
+                <span class="lucent-stat-number"><?php echo $totalcategories; ?></span>
+                <span class="lucent-stat-label">Categories</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Required by Moodle — hidden but present -->
+<div style="display:none"><?php echo $OUTPUT->main_content(); ?></div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- CATEGORIES -->
+<!-- ══════════════════════════════════════════════════ -->
+<?php if (!empty($categories)): ?>
+<section class="lucent-section lucent-categories-section">
+    <div class="lucent-container">
+        <div class="lucent-section-header">
+            <h2 class="lucent-section-title">Browse Categories</h2>
+            <p class="lucent-section-subtitle">Find the perfect course for your learning goals</p>
+        </div>
+        <div class="lucent-categories-grid">
+            <?php
+            $catIcons = ['💻', '📊', '💼', '🎨', '📚', '🔬', '🎵', '🌍'];
+            $catColors = ['#6366f1', '#10b981', '#f59e0b', '#ec4899', '#8b5cf6', '#06b6d4', '#ef4444', '#14b8a6'];
+            $ci = 0;
+            foreach ($categories as $cat):
+                $coursecount = $cat->get_courses_count();
+                $icon = $catIcons[$ci % count($catIcons)];
+                $color = $catColors[$ci % count($catColors)];
+                $ci++;
+            ?>
+            <a href="<?php echo new moodle_url('/course/index.php', ['categoryid' => $cat->id]); ?>" class="lucent-category-card" style="--cat-color: <?php echo $color; ?>">
+                <div class="lucent-category-icon"><?php echo $icon; ?></div>
+                <h3 class="lucent-category-name"><?php echo format_string($cat->name); ?></h3>
+                <span class="lucent-category-count"><?php echo $coursecount; ?> courses</span>
+            </a>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+<?php endif; ?>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- FEATURED COURSES -->
+<!-- ══════════════════════════════════════════════════ -->
+<section class="lucent-section lucent-courses-section">
+    <div class="lucent-container">
+        <div class="lucent-section-header">
+            <h2 class="lucent-section-title">Featured Courses</h2>
+            <a href="<?php echo new moodle_url('/course/index.php'); ?>" class="lucent-view-all">View all →</a>
+        </div>
+        <div class="lucent-courses-grid">
+            <?php foreach ($courses as $course):
+                $courseid = $course->id;
+                $courseobj = get_course($courseid);
+                $context = context_course::instance($courseid);
+
+                // Get course image
+                $courseimage = '';
+                $fs = get_file_storage();
+                $files = $fs->get_area_files($context->id, 'course', 'overviewfiles', false, 'filename', false);
+                foreach ($files as $f) {
+                    if ($f->is_valid_image()) {
+                        $courseimage = moodle_url::make_pluginfile_url(
+                            $f->get_contextid(), $f->get_component(), $f->get_filearea(),
+                            null, $f->get_filepath(), $f->get_filename()
+                        )->out();
+                        break;
+                    }
+                }
+
+                $summary = strip_tags(format_text($courseobj->summary, FORMAT_HTML));
+                if (strlen($summary) > 100) {
+                    $summary = substr($summary, 0, 100) . '...';
+                }
+
+                // Get category name
+                $catname = '';
+                if ($courseobj->category) {
+                    $cat = core_course_category::get($courseobj->category, IGNORE_MISSING);
+                    if ($cat) $catname = $cat->name;
+                }
+            ?>
+            <a href="<?php echo new moodle_url('/course/view.php', ['id' => $courseid]); ?>" class="lucent-course-card">
+                <div class="lucent-course-image" <?php if ($courseimage): ?>style="background-image: url('<?php echo $courseimage; ?>')"<?php endif; ?>>
+                    <?php if (!$courseimage): ?>
+                    <div class="lucent-course-placeholder">📚</div>
+                    <?php endif; ?>
+                    <?php if ($catname): ?>
+                    <span class="lucent-course-badge"><?php echo format_string($catname); ?></span>
+                    <?php endif; ?>
+                </div>
+                <div class="lucent-course-body">
+                    <h3 class="lucent-course-title"><?php echo format_string($courseobj->fullname); ?></h3>
+                    <?php if ($summary): ?>
+                    <p class="lucent-course-desc"><?php echo $summary; ?></p>
+                    <?php endif; ?>
+                </div>
+                <div class="lucent-course-footer">
+                    <span class="lucent-course-meta">
+                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/></svg>
+                        <?php echo $courseobj->numsections ?? 8; ?> sections
+                    </span>
+                    <span class="lucent-course-arrow">→</span>
+                </div>
+            </a>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- CTA SECTION -->
+<!-- ══════════════════════════════════════════════════ -->
+<?php if (!isloggedin() || isguestuser()): ?>
+<section class="lucent-section lucent-cta-section">
+    <div class="lucent-container">
+        <div class="lucent-cta-card">
+            <h2>Ready to Start Learning?</h2>
+            <p>Join thousands of students already learning on our platform</p>
+            <a href="<?php echo new moodle_url('/login/signup.php'); ?>" class="btn lucent-btn-primary lucent-btn-lg">
+                Create Free Account
+            </a>
+        </div>
+    </div>
+</section>
+<?php endif; ?>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- FOOTER -->
+<!-- ══════════════════════════════════════════════════ -->
+<footer class="lucent-footer">
+    <div class="lucent-container">
+        <div class="lucent-footer-content">
+            <div class="lucent-footer-brand">
+                <strong><?php echo format_string($SITE->fullname); ?></strong>
+                <p>Empowering learners worldwide with quality education.</p>
+            </div>
+            <div class="lucent-footer-bottom">
+                <span>© <?php echo date('Y'); ?> <?php echo format_string($SITE->shortname); ?>. All rights reserved.</span>
+                <?php echo $OUTPUT->login_info(); ?>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<?php echo $OUTPUT->standard_end_of_body_html(); ?>
+
+</body>
+</html>
