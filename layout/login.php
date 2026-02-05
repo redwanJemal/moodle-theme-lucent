@@ -139,5 +139,52 @@ echo $OUTPUT->doctype(); ?>
 
 <?php echo $OUTPUT->standard_end_of_body_html(); ?>
 
+<?php if ($issignup): ?>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Password policy — replace long text with info icon + popup
+    var policyEl = document.querySelector('#fitem_id_passwordpolicyinfo .form-control-static[data-name="passwordpolicyinfo"]');
+    if (policyEl) {
+        var container = policyEl.parentElement;
+
+        // Completely hide the original text
+        policyEl.style.display = 'none';
+
+        // Build the info trigger
+        var trigger = document.createElement('div');
+        trigger.className = 'lucent-pw-info-trigger';
+        trigger.innerHTML = '<span class="lucent-pw-info-icon">i</span> <span>Password requirements</span>';
+
+        // Build the popup with clean parsed requirements
+        var popup = document.createElement('div');
+        popup.className = 'lucent-pw-popup';
+        popup.innerHTML = '<strong>Password must have:</strong><ul>' +
+            '<li>At least 8 characters</li>' +
+            '<li>At least 1 digit</li>' +
+            '<li>At least 1 lowercase letter</li>' +
+            '<li>At least 1 uppercase letter</li>' +
+            '<li>At least 1 special character (*, -, #)</li>' +
+            '</ul>';
+
+        container.insertBefore(trigger, policyEl);
+        container.insertBefore(popup, policyEl);
+
+        trigger.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            popup.classList.toggle('show');
+        });
+
+        // Close popup when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!trigger.contains(e.target) && !popup.contains(e.target)) {
+                popup.classList.remove('show');
+            }
+        });
+    }
+});
+</script>
+<?php endif; ?>
+
 </body>
 </html>
