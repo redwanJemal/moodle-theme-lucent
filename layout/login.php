@@ -142,20 +142,21 @@ echo $OUTPUT->doctype(); ?>
 <?php if ($issignup): ?>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Password policy — replace long text with info icon + popup
-    var policyEl = document.querySelector('#fitem_id_passwordpolicyinfo .form-control-static[data-name="passwordpolicyinfo"]');
-    if (policyEl) {
-        var container = policyEl.parentElement;
+    // 1. Hide the password policy info row entirely
+    var policyRow = document.getElementById('fitem_id_passwordpolicyinfo');
+    if (policyRow) policyRow.style.display = 'none';
 
-        // Completely hide the original text
-        policyEl.style.display = 'none';
+    // 2. Add info icon next to the Password label
+    var pwLabel = document.getElementById('id_password_label');
+    if (pwLabel) {
+        // Create wrapper for label + icon
+        var infoBtn = document.createElement('span');
+        infoBtn.className = 'lucent-pw-info-trigger';
+        infoBtn.innerHTML = '<span class="lucent-pw-info-icon">i</span>';
+        infoBtn.title = 'Password requirements';
+        pwLabel.parentElement.appendChild(infoBtn);
 
-        // Build the info trigger
-        var trigger = document.createElement('div');
-        trigger.className = 'lucent-pw-info-trigger';
-        trigger.innerHTML = '<span class="lucent-pw-info-icon">i</span> <span>Password requirements</span>';
-
-        // Build the popup with clean parsed requirements
+        // Create popup
         var popup = document.createElement('div');
         popup.className = 'lucent-pw-popup';
         popup.innerHTML = '<strong>Password must have:</strong><ul>' +
@@ -166,22 +167,53 @@ document.addEventListener('DOMContentLoaded', function() {
             '<li>At least 1 special character (*, -, #)</li>' +
             '</ul>';
 
-        container.insertBefore(trigger, policyEl);
-        container.insertBefore(popup, policyEl);
+        // Insert popup after the label row, inside the password field container
+        var pwField = document.getElementById('fitem_id_password');
+        if (pwField) {
+            popup.style.position = 'relative';
+            pwField.appendChild(popup);
+        }
 
-        trigger.addEventListener('click', function(e) {
+        infoBtn.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
             popup.classList.toggle('show');
         });
 
-        // Close popup when clicking outside
         document.addEventListener('click', function(e) {
-            if (!trigger.contains(e.target) && !popup.contains(e.target)) {
+            if (!infoBtn.contains(e.target) && !popup.contains(e.target)) {
                 popup.classList.remove('show');
             }
         });
     }
+
+    // 3. Add placeholders to signup form inputs
+    var placeholders = {
+        'id_username': 'Choose a username',
+        'id_password': 'Create a password',
+        'id_email': 'your@email.com',
+        'id_email2': 'Confirm your email',
+        'id_firstname': 'First name',
+        'id_lastname': 'Last name'
+    };
+    Object.keys(placeholders).forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el && !el.getAttribute('placeholder')) {
+            el.setAttribute('placeholder', placeholders[id]);
+        }
+    });
+});
+</script>
+<?php endif; ?>
+
+<?php if (!$issignup): ?>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add placeholders to login form if missing
+    var username = document.getElementById('username');
+    var password = document.getElementById('password');
+    if (username && !username.getAttribute('placeholder')) username.setAttribute('placeholder', 'Enter your username');
+    if (password && !password.getAttribute('placeholder')) password.setAttribute('placeholder', 'Enter your password');
 });
 </script>
 <?php endif; ?>
