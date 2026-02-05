@@ -9124,6 +9124,70 @@ html[dir="rtl"] {
 }
 
 
+// ── FIX: Remove double active indicators on nav tabs ─────────
+// Boost's moremenu adds a ::after pseudo-element AND our CSS adds border-bottom.
+// Kill the ::after to keep only our clean border-bottom approach.
+
+.secondary-navigation .nav-tabs .nav-link.active::after,
+.secondary-navigation .nav-tabs .nav-link[aria-current]::after {
+  display: none !important;
+}
+
+// Also ensure primary nav active links don't double up
+.primary-navigation .nav-link.active::after,
+.primary-navigation .nav-link[aria-current="true"]::after {
+  display: none !important;
+}
+
+// Clean primary nav active state — use subtle background instead of thick border
+.primary-navigation .nav-link {
+  border-bottom: none !important;
+
+  &.active,
+  &[aria-current="true"] {
+    border-bottom: 2px solid var(--lucent-primary) !important;
+    border-radius: 0;
+    background-color: transparent !important;
+  }
+}
+
+// Secondary nav — ensure only ONE indicator (our border-bottom)
+.secondary-navigation .nav-tabs .nav-link {
+  border: none !important;
+  border-bottom: 2px solid transparent !important;
+  margin-bottom: -2px;
+
+  &:hover {
+    border-bottom-color: var(--lucent-border) !important;
+  }
+
+  &.active {
+    border-bottom-color: var(--lucent-primary) !important;
+    color: var(--lucent-primary) !important;
+    background: transparent !important;
+  }
+}
+
+
+// ── FIX: Hide hamburger on mobile (bottom nav replaces it) ──
+
+@media (max-width: 767.98px) {
+  // Hide the hamburger button — bottom nav handles mobile navigation
+  .lucent-hamburger,
+  .navbar-toggler[data-target="theme_boost-drawers-primary"] {
+    display: none !important;
+  }
+
+  // Hide the primary drawer (sidebar) on mobile entirely
+  .drawer.drawer-primary {
+    display: none !important;
+  }
+
+  // Keep the drawer toggles for course index and blocks visible
+  // (those are accessed via course pages, not primary nav)
+}
+
+
 // ── PRINT STYLES ─────────────────────────────────────────────
 
 @media print {
